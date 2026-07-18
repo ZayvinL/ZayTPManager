@@ -1,10 +1,11 @@
 # ZayTPManager 使用说明
 
-Nuke 模版管理面板：把常用的节点组合按 **项目 / 条目 / 版本** 三级归档，
-带图片预览（支持 GIF 动画）、版本说明、相对路径记录，适配多用户共享与多系统（Windows / Linux / macOS）。
+Nuke 节点模版管理面板，把常用节点组合按 **项目 / 条目 / 版本** 三级归档，支持图片预览（含 GIF 动画）、版本说明、搜索过滤。数据以相对路径存储，可整体搬移，适配 Windows / Linux / macOS 多系统及多用户共享。
 
-- 环境要求：**Nuke 13 及以上**（Python 3，PySide2 5.12+ 或 PySide6，随 Nuke 自带，无需额外安装）
-- 作者：Zayvin  QQ: 971346144
+A Nuke template manager that organizes node groups by Project / Item / Version with image preview (GIF supported), version notes, and search. Relative-path storage makes the data portable across Windows / Linux / macOS and shareable among multiple users.
+
+- 环境要求 / Requirements：**Nuke 13+** (Python 3, PySide2 5.12+ or PySide6, bundled with Nuke)
+- 作者 / Author：Zayvin  QQ: 971346144
 
 ---
 
