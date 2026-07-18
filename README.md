@@ -6,6 +6,7 @@ A Nuke template manager that organizes node groups by Project / Item / Version w
 
 - 环境要求 / Requirements：**Nuke 13+** (Python 3, PySide2 5.12+ or PySide6, bundled with Nuke)
 - 作者 / Author：Zayvin  QQ: 971346144
+- 仓库 / Repos：[GitHub](https://github.com/ZayvinL/ZayTPManager) ｜ [Gitee](https://gitee.com/q-wuan90/ZayTPManager)
 
 ---
 
