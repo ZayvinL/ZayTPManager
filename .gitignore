@@ -6,6 +6,9 @@ __pycache__/
 .claude/
 .lingma/
 
+# Template data (not tracked)
+templateWork/
+
 # OS
 .DS_Store
 Thumbs.db
