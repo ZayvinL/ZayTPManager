@@ -9,7 +9,7 @@ import nukescripts
 
 import paths
 import zay_tp_data as TPD
-from qt_imports import (
+from zayTPManager_qt_imports import (
     Qt, QUrl, QSize, QEvent,
     QApplication, QMainWindow, QWidget, QSplitter, QVBoxLayout, QHBoxLayout,
     QComboBox, QLineEdit, QPushButton, QCheckBox, QLabel,

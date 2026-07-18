@@ -79,7 +79,7 @@ def data_root_get():
 
 | 文件 | 职责 |
 |---|---|
-| `qt_imports.py` | 统一管理 Qt 导入，自动适配 PySide6 / PySide2 |
+| `zayTPManager_qt_imports.py` | 统一管理 Qt 导入，自动适配 PySide6 / PySide2 |
 | `paths.py` | 路径与权限：工具目录、数据根目录、相对/绝对路径换算 |
 | `json_io.py` | json 读写（utf-8、原子写入） |
 | `zay_tp_data.py` | 数据层：项目/条目/版本的扫描、创建、记录、删除（不依赖 nuke/Qt） |
@@ -171,5 +171,5 @@ templateWork/                     # 数据根目录
 - **旧版工具的数据不显示**：旧格式（`0001_2025_04_23` 目录）不再识别，仅识别 `v0001` 格式；旧数据仍保留在磁盘上，可手动整理
 - **别人新加的模版看不到**：点「刷新界面」重新扫描
 - **GIF 悬浮放大时不动**：悬浮大图显示的是首帧，缩略图处正常播放动画
-- **同一 Nuke 环境有多份 `qt_imports.py`**：多个插件目录共享 `sys.path`，同名模块只加载先找到的那份，请保持各份内容一致（本工具包内的为最新版，可直接覆盖其他副本）
+- **同一 Nuke 环境有多份同名模块**：模块已改名为 `zayTPManager_qt_imports.py` 以避免与 `sys.path` 上其他插件的 `qt_imports.py` 冲突
 - **数据备份**：`templateWork/` 不在 git 跟踪范围内，请自行定期备份该文件夹
