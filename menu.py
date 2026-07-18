@@ -1,16 +1,7 @@
 import nuke
-import tppanel
-
-
+import zay_tp_manager
 
 
 bar = nuke.menu('Nodes')
 toolbar = bar.addMenu("Z")
-toolbar.addCommand('pipline/tempplate_Panel', tppanel.run_show_funa)
-
-
-
-
-
-
-
+toolbar.addCommand('pipline/ZayTPManager', zay_tp_manager.run_show_funa)
