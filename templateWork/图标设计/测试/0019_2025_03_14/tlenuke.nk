@@ -1,0 +1,160 @@
+set cut_paste_input [stack 0]
+version 13.2 v3
+push $cut_paste_input
+Group {
+ name RandomV4Cards6
+ tile_color 0xff0000ff
+ selected true
+ xpos 1448
+ ypos 1229
+ addUserKnob {20 User l 功能}
+ addUserKnob {20 groupsample l 采样 t "范围采样\n选择一个路径存采样的数据\n3d是计算三维空间里选中的点数据,\n点的数量越多,计算记录的时间越长\n2d是计算上游给的Postion文件" n 1}
+ addUserKnob {2 pointspath l 点云数据路径}
+ pointspath E:/invsss/DBsave/
+ addUserKnob {22 RenderPoints l 3D点 t 采样三维空间选中的点信息 T "import point3drender\n\n\npoint3drender.Writedb()" +STARTLINE}
+ addUserKnob {22 python_button_1 l 2D点 t 采样二维空间选中的点信息 -STARTLINE T "import point2drender\n\npoint2drender.Writedb()"}
+ addUserKnob {22 printdata t 打印采样记录的数据 -STARTLINE +INVISIBLE T "import pdata\n\npdata.prdata()"}
+ addUserKnob {26 ""}
+ addUserKnob {1 SampleNodeName l 2D点采样文件 t "上游给的Postion文件\npostion 节点名"}
+ SampleNodeName Read3
+ addUserKnob {22 python_button_2 l 使用选中节点 t 获取选中节点名 -STARTLINE T "import nuke\n\ntn = nuke.thisNode()\ntn.begin()\ntn.end()\nSampleNodeName = tn\[\"SampleNodeName\"]\nnds = nuke.selectedNodes()\nif nds != \[]:\n    SampleNodeName.setValue(nds\[0].name())\nelse:\n    SampleNodeName.setValue(\"请选中Postion的Read节点,单击Get\")"}
+ addUserKnob {15 samplebox l "2d box" t "2d 采样范围"}
+ samplebox {0 0 2048 1556}
+ addUserKnob {22 rest_button l rest t 按照工程设定设置采样大小 -STARTLINE T "import nuke\n\ntn = nuke.thisNode()\n\nsamplebox = tn\[\"samplebox\"]\nww = nuke.root().width()\nhh = nuke.root().height()\nsamplebox.setValue(\[0,0,ww,hh])"}
+ addUserKnob {7 xsize l Xsize t "2d 采样点坐标的间隔数值" R 10 1000}
+ xsize 100
+ addUserKnob {7 ysize l Ysize t "2d 采样点坐标的间隔数值" R 10 1000}
+ ysize 50
+ addUserKnob {22 python_button l 统计要采样的2D点数量 t 统计二维采样点数量 T "import nuke\n\ntn = nuke.thisNode()\n\nsamplebox = tn\[\"samplebox\"]\nxsize = int(tn\[\"xsize\"].value())\nysize = int(tn\[\"ysize\"].value())\n\n# 定义范围和间隔\nx_start = int(samplebox.value(0))\ny_start = int(samplebox.value(1))\nx_end = int(samplebox.value(2))\ny_end = int(samplebox.value(3))\nx_interval = xsize\ny_interval = ysize\n\n# 初始化存储坐标的列表和计数器\ncoordinates = \[]\ncount = 0\n\n# 生成符合要求的坐标\nfor x in range(x_start, x_end + 1, x_interval):\n    for y in range(y_start, y_end + 1, y_interval):\n        # 将坐标添加到列表中\n        coordinates.append(\[x, y])\n        # 计数器加 1\n        count += 1\n        \nnuke.message(f\"采样点数量为: \{count\}\")" +STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {13 position_3dfrom l min t From}
+ position_3dfrom {-2.5078125 -2.4296875 -4.71875}
+ addUserKnob {13 position_3dto l max t To}
+ position_3dto {3.94140625 2.8203125 0.5}
+ addUserKnob {22 python_button_3 l 设置三维空间范围 t "根据采样的数据内容设置大致的三维空间位置\n\n\nSET  spatial extent" T "import nuke\nimport nukescripts\nimport sqlite3\n\n\ntn = nuke.thisNode()\ntn.begin()\ntn.end()\n\n\npointspath = tn\[\"pointspath\"].value() + \"PointsSample.db\" \n\nposition_3dfrom = tn\[\"position_3dfrom\"]\nposition_3dto = tn\[\"position_3dto\"]\n\n# 连接到数据库\nconn = sqlite3.connect(f'\{pointspath\}')\n# 创建游标对象\ncursor = conn.cursor()\n\ntry:\n    # 查找 col1 列的最小值\n    cursor.execute('SELECT MIN(col1) FROM test_table')\n    min_value_x = cursor.fetchone()\[0]\n\n    # 查找 col1 列的最大值\n    cursor.execute('SELECT MAX(col1) FROM test_table')\n    max_value_x = cursor.fetchone()\[0]\n    \n    #---------------------------------\n    # 查找 col1 列的最小值\n    cursor.execute('SELECT MIN(col2) FROM test_table')\n    min_value_y = cursor.fetchone()\[0]\n\n    # 查找 col1 列的最大值\n    cursor.execute('SELECT MAX(col2) FROM test_table')\n    max_value_y = cursor.fetchone()\[0]\n    \n    #---------------------------------\n    \n    # 查找 col1 列的最小值\n    cursor.execute('SELECT MIN(col3) FROM test_table')\n    min_value_z = cursor.fetchone()\[0]\n\n    # 查找 col1 列的最大值\n    cursor.execute('SELECT MAX(col3) FROM test_table')\n    max_value_z = cursor.fetchone()\[0]\n    \n    mins = \[min_value_x,min_value_y,min_value_z]\n    maxs = \[max_value_x,max_value_y,max_value_z]\n    \n    position_3dfrom.setValue(mins)\n    position_3dto.setValue(maxs)\n\n\n\nexcept sqlite3.Error as e:\n    print(f\"数据库操作出错: \{e\}\")\nfinally:\n    # 关闭游标和连接\n    cursor.close()\n    conn.close()" +STARTLINE}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {13 position_3dfd l 浮动值 t "浮动范围,在min和max的范围里增加变量值,以达到更多变化的可能性\n\nAdd Size"}
+ addUserKnob {26 ""}
+ addUserKnob {6 lookx t 锁定轴向 +STARTLINE}
+ addUserKnob {6 looky t 锁定轴向 -STARTLINE}
+ addUserKnob {6 lookz t 锁定轴向 -STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {6 ImageInput l 连接外部图片接口 t 每个Card设置单独的image接口 +STARTLINE}
+ addUserKnob {6 ShowInputName l 显示接口号 t 显示端口 -STARTLINE}
+ addUserKnob {6 zcheck l 近大远小规则 t "近大远小 缩放比例" -STARTLINE}
+ addUserKnob {6 closeCheckbord l 关闭默认image -STARTLINE}
+ addUserKnob {3 seedsize l 种子}
+ seedsize 8240
+ addUserKnob {22 RondomSize l 更新种子 -STARTLINE T "import random\nimport nuke\n\ntn = nuke.thisNode()\n\ntn.begin()\nransize = random.randint(-9999,9999)\nseedsize = tn\[\"seedsize\"].setValue(ransize)\n\n#tn\[\"CteatCards\"].execute()\ntn.end()"}
+ addUserKnob {3 num l 数量 -STARTLINE}
+ num 2
+ addUserKnob {22 CteatCards l "创建随机Card A" t 随机点在采样的范围内 -STARTLINE T "import cardtypea\n\ncardtypea.createdCard()"}
+ addUserKnob {22 CteatCardsB l "创建随机Card B" t 随机点靠近在采样的3d点上 -STARTLINE T "import cardtypeb\n\ncardtypeb.createdCard()"}
+ addUserKnob {26 ""}
+ addUserKnob {13 translate_3d l 整体偏移}
+ addUserKnob {7 translate_x l "散布 X 间距"}
+ addUserKnob {7 translate_y l "散布 Y 间距"}
+ addUserKnob {7 translate_z l "散布 Z 间距"}
+ addUserKnob {7 scaleSize l 整体缩比例}
+ scaleSize 1
+ addUserKnob {22 matchSamplePoint l "Try 匹配采样点的空间位置" t 贴近采样点的三维坐标设置 T "\nimport nuke\n\n\ntn = nuke.thisNode()\n\n\ntn\[\"position_3dfd\"].setValue(\[0,0,0])\ntn\[\"translate_3d\"].setValue(\[0,0,0])\ntn\[\"translate_x\"].setValue(0)\ntn\[\"translate_y\"].setValue(0)\ntn\[\"translate_z\"].setValue(0)" +STARTLINE}
+ addUserKnob {22 ClearExpression l "清除掉link 手动调整" t 清除link-拷贝出来单独调整 -STARTLINE T "\nimport nuke\n\n\ntn = nuke.thisNode()\n\nret = nuke.ask(\"清空表达式连接？\")\nif ret:\n    tn.begin()\n\n    for i in nuke.allNodes(\"TransformGeo\"):\n        if i\['name'].getValue() not in \['cam','Output1','TransformGeoAll',\"Scenecc\"]:\n            if i\['translate'].isAnimated():\n                i\['translate'].clearAnimated()\n                \n            if i\['uniform_scale'].isAnimated():\n                i\['uniform_scale'].clearAnimated()\n                \n            for x in \['look_rotate_x','look_rotate_y','look_rotate_z']:\n                if i\[x].isAnimated():\n                    i\[x].clearAnimated()\n    \n    for i in nuke.allNodes(\"FrameHold\"):\n        if i\['firstFrame'].isAnimated():\n            i\['firstFrame'].clearAnimated()\n            \n    for i in nuke.allNodes(\"Text2\"):\n        for x in \['box','replace','yjustify',\"disable\"]:\n            if i\[x].isAnimated():\n                i\[x].clearAnimated()\n                \n\n    tn.end()"}
+}
+ Input {
+  inputs 0
+  name cam
+  label 0
+  xpos -226
+  ypos -3
+ }
+set Nadda400 [stack 0]
+push 0
+ CheckerBoard2 {
+  inputs 0
+  name CheckerBoard1
+  xpos 474
+  ypos -3
+ }
+set Nadda800 [stack 0]
+ Card2 {
+  selectable false
+  rows 1
+  columns 1
+  control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 1 {0.1666666865 0 0} 1 {0 0 0} 1 {0 0.1666666865 0} 1 {0 0 0} 1 {0 0 0} 
+1 {0 -0.5 0} 1 {0.1666666716 0 0} 1 {-0.1666666716 0 0} 1 {0 0.1666666865 0} 1 {0 0 0} 1 {0.5 0 0} 
+1 {0.5 -0.5 0} 1 {0 0 0} 1 {-0.1666666865 0 0} 1 {0 0.1666666865 0} 1 {0 0 0} 1 {1 0 0} 
+1 {-0.5 0 0} 1 {0.1666666865 0 0} 1 {0 0 0} 1 {0 0.1666666716 0} 1 {0 -0.1666666716 0} 1 {0 0.5 0} 
+1 {0 0 0} 1 {0.1666666716 0 0} 1 {-0.1666666716 0 0} 1 {0 0.1666666716 0} 1 {0 -0.1666666716 0} 1 {0.5 0.5 0} 
+1 {0.5 0 0} 1 {0 0 0} 1 {-0.1666666865 0 0} 1 {0 0.1666666716 0} 1 {0 -0.1666666716 0} 1 {1 0.5 0} 
+1 {-0.5 0.5 0} 1 {0.1666666865 0 0} 1 {0 0 0} 1 {0 0 0} 1 {0 -0.1666666865 0} 1 {0 1 0} 
+1 {0 0.5 0} 1 {0.1666666716 0 0} 1 {-0.1666666716 0 0} 1 {0 0 0} 1 {0 -0.1666666865 0} 1 {0.5 1 0} 
+1 {0.5 0.5 0} 1 {0 0 0} 1 {-0.1666666865 0 0} 1 {0 0 0} 1 {0 -0.1666666865 0} 1 {1 1 0} }
+  name Card2
+  xpos 274
+  ypos 497
+ }
+ TransformGeo {
+  inputs 3
+  translate {{"parent.translate_3d.x + -0.10310099764682867 + -0.08282470703125 * translate_x"} {"parent.translate_3d.y + -0.8513274949271503 + 1.04296875 * translate_y"} {"parent.translate_3d.z + -1.9339559276420633 + -1.693359375 * translate_z"}}
+  uniform_scale {{(parent.scaleSize)}}
+  look_rotate_x {{parent.lookx}}
+  look_rotate_y {{parent.looky}}
+  look_rotate_z {{parent.lookz}}
+  name TransformGeo2
+  selected true
+  xpos 274
+  ypos 797
+ }
+push $Nadda400
+push 0
+push $Nadda800
+ Card2 {
+  selectable false
+  rows 1
+  columns 1
+  control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 1 {0.1666666865 0 0} 1 {0 0 0} 1 {0 0.1666666865 0} 1 {0 0 0} 1 {0 0 0} 
+1 {0 -0.5 0} 1 {0.1666666716 0 0} 1 {-0.1666666716 0 0} 1 {0 0.1666666865 0} 1 {0 0 0} 1 {0.5 0 0} 
+1 {0.5 -0.5 0} 1 {0 0 0} 1 {-0.1666666865 0 0} 1 {0 0.1666666865 0} 1 {0 0 0} 1 {1 0 0} 
+1 {-0.5 0 0} 1 {0.1666666865 0 0} 1 {0 0 0} 1 {0 0.1666666716 0} 1 {0 -0.1666666716 0} 1 {0 0.5 0} 
+1 {0 0 0} 1 {0.1666666716 0 0} 1 {-0.1666666716 0 0} 1 {0 0.1666666716 0} 1 {0 -0.1666666716 0} 1 {0.5 0.5 0} 
+1 {0.5 0 0} 1 {0 0 0} 1 {-0.1666666865 0 0} 1 {0 0.1666666716 0} 1 {0 -0.1666666716 0} 1 {1 0.5 0} 
+1 {-0.5 0.5 0} 1 {0.1666666865 0 0} 1 {0 0 0} 1 {0 0 0} 1 {0 -0.1666666865 0} 1 {0 1 0} 
+1 {0 0.5 0} 1 {0.1666666716 0 0} 1 {-0.1666666716 0 0} 1 {0 0 0} 1 {0 -0.1666666865 0} 1 {0.5 1 0} 
+1 {0.5 0.5 0} 1 {0 0 0} 1 {-0.1666666865 0 0} 1 {0 0 0} 1 {0 -0.1666666865 0} 1 {1 1 0} }
+  name Card1
+  xpos -226
+  ypos 497
+ }
+ TransformGeo {
+  inputs 3
+  translate {{"parent.translate_3d.x + 1.3651656975301503 + -0.08282470703125 * translate_x"} {"parent.translate_3d.y + 0.694798090893094 + 1.04296875 * translate_y"} {"parent.translate_3d.z + -1.832149414079498 + -1.693359375 * translate_z"}}
+  uniform_scale {{(parent.scaleSize)}}
+  look_rotate_x {{parent.lookx}}
+  look_rotate_y {{parent.looky}}
+  look_rotate_z {{parent.lookz}}
+  name TransformGeo1
+  xpos -226
+  ypos 797
+ }
+ Scene {
+  inputs 2
+  name Scenecc
+  xpos 279
+  ypos 2672
+ }
+ TransformGeo {
+  name TransformGeoAll
+  xpos 269
+  ypos 2785
+ }
+ Output {
+  name Output1
+  xpos 269
+  ypos 2912
+ }
+end_group

@@ -1,0 +1,30 @@
+{
+    "nodenamelist": [
+        "Copy2",
+        "Premult2",
+        "Constant1",
+        "Text2",
+        "Merge2",
+        "Write1",
+        "Shuffle1",
+        "Crop1",
+        "Colorspace1",
+        "Read2",
+        "Transform1",
+        "Blur1",
+        "Shuffle2",
+        "Text1",
+        "Copy1",
+        "Premult1",
+        "Merge1",
+        "Merge3",
+        "Chromatic_Aberration1",
+        "Radial1",
+        "Grade1",
+        "ColorCorrect1",
+        "Invert1",
+        "ColorCorrect2",
+        "Radial2",
+        "Dot1"
+    ]
+}

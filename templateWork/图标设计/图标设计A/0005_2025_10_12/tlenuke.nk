@@ -1,0 +1,1654 @@
+set cut_paste_input [stack 0]
+version 13.2 v3
+Constant {
+ inputs 0
+ channels rgb
+ color {0.9960784912 0.984313786 0.9647059441 0}
+ name Constant14
+ selected true
+ xpos -11281
+ ypos 133
+}
+Reformat {
+ type scale
+ scale 2
+ name Reformat7
+ selected true
+ xpos -11281
+ ypos 207
+}
+set N3788f000 [stack 0]
+Roto {
+ output alpha
+ curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 2097152}
+    {t x44000000 x44000000}
+    {a pt1x 0 pt1y 0 pt2x 0 pt2y 0 pt3x 0 pt3y 0 pt4x 0 pt4y 0 ptex00 0 ptex01 0 ptex02 0 ptex03 0 ptex10 0 ptex11 0 ptex12 0 ptex13 0 ptex20 0 ptex21 0 ptex22 0 ptex23 0 ptex30 0 ptex31 0 ptex32 0 ptex33 0 ptof1x 0 ptof1y 0 ptof2x 0 ptof2y 0 ptof3x 0 ptof3y 0 ptof4x 0 ptof4y 0 pterr 0 ptrefset 0 ptmot x40800000 ptref 0}
+    {curvegroup Bezier2 512 bezier
+     {{cc
+       {f 8192}
+       {px 1
+        {x40a00000 x40600000}
+        {x44d2b000 x430d8000}
+        {xc0a00000 xc0600000}
+        {0 x41400000}
+        {x44d47000 x42a70000}
+        {0 xc1400000}
+        {xc0b00000 x41080000}
+        {x44d52000 x420c0000}
+        {x40b00000 xc1080000}
+        {xc2160000 x40400000}
+        {x44d9e000 x41380000}
+        {x42160000 xc0400000}
+        {xc22e0000 xc0900000}
+        {x44ef5000 x41940000}
+        {x422e0000 x40900000}
+        {xc1900000 xc2140000}
+        {x44fd6000 x421a0000}
+        {x41900000 x42140000}
+        {x41dc0000 xc1940000}
+        {x45000000 x42ef0000}
+        {xc1dc0000 x41940000}
+        {x41b40000 xbf800000}
+        {x44f0b000 x43288000}
+        {xc1b40000 1}
+        {x41fc0000 x40400000}
+        {x44e1e000 x43280000}
+        {xc1fc0000 xc0400000}
+        {x41a80000 x40b00000}
+        {x44d80000 x431d0000}
+        {xc1a80000 xc0b00000}}}     idem}
+     {tx 1 x44e4899a x42bc4ccd}
+     {a osw x41200000 osf 0 str 1 spx x44000000 spy x44000000 sb 1 tt x40800000}}
+    {curvegroup Bezier1 512 bezier
+     {{cc
+       {f 8192}
+       {px 1
+        {x3fcec151 x3ea1c3cc}
+        {x44b84000 x44179e8b}
+        {xbfcec150 xbea1c3d4}
+        {x3f495420 x3f84f0af}
+        {x44b68f20 x44158ccd}
+        {xbf49541e xbf84f0b0}
+        {xbf8adcaf x3f38a5e7}
+        {x44b734cd x4414dccd}
+        {x3f8adcb0 xbf38a5e5}
+        {xbf86d0de x3f2fc92b}
+        {x44b8f99a x44125666}
+        {x3f86d0df xbf2fc929}
+        {xbf9f3a13 xbe3b27bd}
+        {x44b99ccd x4411b99a}
+        {x3f9f3a12 x3e3b27c4}
+        {x3cc5d4b2 xbfc044cf}
+        {x44ba4b33 x4412b99a}
+        {xbcc5d52b x3fc044cf}
+        {x3f3ff9ba xbf8ab34f}
+        {x44b994cd x44159ccd}
+        {xbf3ff9bd x3f8ab34f}
+        {x3f86b2f5 xbf4b0d8e}
+        {x44b8fccd x44168000}
+        {xbf86b2f5 x3f4b0d8b}}}     idem}
+     {tx 1 x44b8adce x4414a000}
+     {a osw x41200000 osf 0 str 1 spx x44000000 spy x44000000 sb 1 tt x40800000}}}}}}
+ toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 tt 5 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 tt 6 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 tt 7 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 tt 8 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 tt 9 }
+  { createOpenSpline str 1 ssx 1 ssy 1 sf 1 tt 10 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+ toolbar_brush_hardness 0.200000003
+ toolbar_source_transform_scale {1 1}
+ toolbar_source_transform_center {512 512}
+ colorOverlay {0 0 0 0}
+ lifetime_type "all frames"
+ motionblur_shutter_offset_type centred
+ source_black_outside true
+ name Roto23
+ selected true
+ xpos -11554
+ ypos 469
+}
+push $N3788f000
+Roto {
+ output alpha
+ curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 2097152}
+    {t x44000000 x44000000}
+    {a pt1x 0 pt1y 0 pt2x 0 pt2y 0 pt3x 0 pt3y 0 pt4x 0 pt4y 0 ptex00 0 ptex01 0 ptex02 0 ptex03 0 ptex10 0 ptex11 0 ptex12 0 ptex13 0 ptex20 0 ptex21 0 ptex22 0 ptex23 0 ptex30 0 ptex31 0 ptex32 0 ptex33 0 ptof1x 0 ptof1y 0 ptof2x 0 ptof2y 0 ptof3x 0 ptof3y 0 ptof4x 0 ptof4y 0 pterr 0 ptrefset 0 ptmot x40800000 ptref 0}
+    {curvegroup Ellipse5 512 bezier
+     {{cc
+       {f 8192}
+       {px 1
+        {xc22a1a90 0}
+        {x44254000 x440b8000}
+        {x422a1a90 0}
+        {0 xc1f536e0}
+        {x44388000 x44196000}
+        {0 x41f536e0}
+        {x422a1a90 0}
+        {x44254000 x44274000}
+        {xc22a1a90 0}
+        {0 x41f536e0}
+        {x44120000 x44196000}
+        {0 xc1f536e0}}}
+      {cc
+       {f 8192}
+       {p
+        {{{1 xc22a1a90}}
+      {{1 0}}}
+        {{{1 0}}
+      {{1 0}}}
+        {{{1 x422a1a90}}
+      {{1 0}}}
+        {{{1 0}}
+      {{1 xc1f536e0}}}
+        {{{1 0}}
+      {{1 0}}}
+        {{{1 0}}
+      {{1 x41f536e0}}}
+        {{{1 x422a1a90}}
+      {{1 0}}}
+        {{{1 0}}
+      {{1 0}}}
+        {{{1 xc22a1a90}}
+      {{1 0}}}
+        {{{1 0}}
+      {{1 x41f536e0}}}
+        {{{1 0}}
+      {{1 0}}}
+        {{{1 0}}
+      {{1 xc1f536e0}}}}}}
+     {tx 1 x44254000 x44196000}
+     {a osw x41200000 osf 0 str 1 spx x44000000 spy x44000000 sb 1 tt x40e00000}}
+    {curvegroup Ellipse4 512 bezier
+     {{cc
+       {f 8192}
+       {px 1
+        {xc2bb8028 0}
+        {x441fb000 x4415a000}
+        {x42bb8028 0}
+        {0 xc2848c60}
+        {x444a2000 x4433a000}
+        {0 x42848c60}
+        {x42bb8028 0}
+        {x441fb000 x4451a000}
+        {xc2bb8028 0}
+        {0 x42848c60}
+        {x43ea8000 x4433a000}
+        {0 xc2848c60}}}
+      {cc
+       {f 8192}
+       {p
+        {{{1 xc2bb8028}}
+      {{1 0}}}
+        {{{1 0}}
+      {{1 0}}}
+        {{{1 x42bb8028}}
+      {{1 0}}}
+        {{{1 0}}
+      {{1 xc2848c60}}}
+        {{{1 0}}
+      {{1 0}}}
+        {{{1 0}}
+      {{1 x42848c60}}}
+        {{{1 x42bb8028}}
+      {{1 0}}}
+        {{{1 0}}
+      {{1 0}}}
+        {{{1 xc2bb8028}}
+      {{1 0}}}
+        {{{1 0}}
+      {{1 x42848c60}}}
+        {{{1 0}}
+      {{1 0}}}
+        {{{1 0}}
+      {{1 xc2848c60}}}}}}
+     {tx 1 x441fb000 x4433a000}
+     {a osw x41200000 osf 0 str 1 spx x44000000 spy x44000000 sb 1 tt x40e00000}}
+    {curvegroup Bezier2 512 bezier
+     {{cc
+       {f 8192}
+       {px 1
+        {xc0301bc0 x41960a32}
+        {x44c99001 x443a0000}
+        {x40301bcc xc1960a32}
+        {x40bb598c x40d6c448}
+        {x44c32001 x44290000}
+        {xc0bb598a xc0d6c44a}
+        {x40db4b71 x40b60767}
+        {x44c02000 x4422e000}
+        {xc0db4b6f xc0b60769}
+        {x40b7c910 x408706a7}
+        {x44b996bd x441941af}
+        {xc0b7c90f xc08706a8}
+        {x40c3b3f9 x406a2ca9}
+        {x44b62000 x44150000}
+        {xc0c3b3f8 xc06a2cac}
+        {x40ffb8b7 x3f34824d}
+        {x44b24000 x44106000}
+        {xc0ffb8b7 xbf348261}
+        {x41833a90 xc107008f}
+        {x44a30000 x4411a000}
+        {xc1833a91 x4107008d}
+        {xc07fbb58 xc190115b}
+        {x449eb000 x44248000}
+        {x407fbb3b x4190115b}
+        {xc19e17ad xc17cc4f4}
+        {x44a79000 x443ac000}
+        {x419e17ad x417cc4f4}
+        {xc1a35df0 xc0bdb75e}
+        {x44b4d000 x4447e000}
+        {x41a35def x40bdb769}
+        {xc19dbd00 x40d2f31a}
+        {x44c0c001 x44496000}
+        {x419dbcb2 xc0d2f319}}}     idem}
+     {tx 1 x44b585d1 x442948ba}
+     {a osw x41200000 osf 0 str 1 spx x44000000 spy x44000000 sb 1 tt x40800000}}
+    {curvegroup Bezier1 512 bezier
+     {{cc
+       {f 8192}
+       {px 1
+        {xbfcccd00 x3fe66400}
+        {x43f61972 x44d52204}
+        {x3f4ccc00 xbf666800}
+        {xc2248b00 x41fd8ac0}
+        {x4410c000 x44cd6666}
+        {x42248af0 xc1fd8b00}
+        {0 0}
+        {x4424c000 x44c53333}
+        {0 0}
+        {xbeccc800 0}
+        {x4437d99a x44bcc000}
+        {x3eccc800 0}
+        {xbfcccc00 x3f4cd000}
+        {x44448000 x44b86000}
+        {x3fcccc00 xbf4cd000}
+        {x41980000 x40cccd00}
+        {x44438ccd x44b65333}
+        {xc1980000 xc0cccd00}
+        {x41000000 xc1680000}
+        {x440c8000 x44be4000}
+        {xc1000000 x41680000}
+        {x40a00000 xc1380000}
+        {x43fd0000 x44c99000}
+        {xc0a00000 x41380000}
+        {x40200000 xc0200000}
+        {x43e58000 x44d44000}
+        {xc0200000 x40200000}
+        {xbfb33300 x3eccd000}
+        {x43ec999a x44d5599a}
+        {x3fb33300 xbeccd000}}}     idem}
+     {tx 1 x4417599b x44c61eef}
+     {a osw x41200000 osf 0 str 1 spx x44000000 spy x44000000 sb 1 tt x40800000}}
+    {curvegroup Ellipse3 512 bezier
+     {{cc
+       {f 8192}
+       {px 1
+        {xc26f23a0 0}
+        {x44483000 x449fe000}
+        {x426f23a0 0}
+        {0 xc217e0e0}
+        {x44634000 x44a87800}
+        {0 x4217e0e0}
+        {x426f23a0 0}
+        {x44483000 x44b11000}
+        {xc26f23a0 0}
+        {0 x4217e0e0}
+        {x442d2000 x44a87800}
+        {0 xc217e0e0}}}
+      {cc
+       {f 8192}
+       {p
+        {{{1 xc26f23a0}}
+      {{1 0}}}
+        {{{1 0}}
+      {{1 0}}}
+        {{{1 x426f23a0}}
+      {{1 0}}}
+        {{{1 0}}
+      {{1 xc217e0e0}}}
+        {{{1 0}}
+      {{1 0}}}
+        {{{1 0}}
+      {{1 x4217e0e0}}}
+        {{{1 x426f23a0}}
+      {{1 0}}}
+        {{{1 0}}
+      {{1 0}}}
+        {{{1 xc26f23a0}}
+      {{1 0}}}
+        {{{1 0}}
+      {{1 x4217e0e0}}}
+        {{{1 0}}
+      {{1 0}}}
+        {{{1 0}}
+      {{1 xc217e0e0}}}}}}
+     {tx 1 x44483000 x44a87800}
+     {a osw x41200000 osf 0 str 1 spx x44000000 spy x44000000 sb 1 tt x40e00000}}
+    {curvegroup Ellipse2 512 bezier
+     {{cc
+       {f 8192}
+       {px 1
+        {xc3590c44 0}
+        {x44826000 x44668000}
+        {x43590c40 0}
+        {0 xc303ff00}
+        {x44b38000 x44912000}
+        {0 x4303ff00}
+        {x43590c40 0}
+        {x44826000 x44af0000}
+        {xc3590c44 0}
+        {0 x4303ff00}
+        {x44228000 x44912000}
+        {0 xc303ff00}}}
+      {cc
+       {f 8192}
+       {p
+        {{{1 xc3590c44}}
+      {{1 0}}}
+        {{{1 0}}
+      {{1 0}}}
+        {{{1 x43590c40}}
+      {{1 0}}}
+        {{{1 0}}
+      {{1 xc303ff00}}}
+        {{{1 0}}
+      {{1 0}}}
+        {{{1 0}}
+      {{1 x4303ff00}}}
+        {{{1 x43590c40}}
+      {{1 0}}}
+        {{{1 0}}
+      {{1 0}}}
+        {{{1 xc3590c44}}
+      {{1 0}}}
+        {{{1 0}}
+      {{1 x4303ff00}}}
+        {{{1 0}}
+      {{1 0}}}
+        {{{1 0}}
+      {{1 xc303ff00}}}}}}
+     {tx 1 x44826000 x44912000}
+     {a osw x41200000 osf 0 str 1 spx x44000000 spy x44000000 sb 1 tt x40e00000}}
+    {curvegroup Ellipse1 512 bezier
+     {{cc
+       {f 8192}
+       {px 1
+        {xc376df0c 0}
+        {x447a4000 x43fd0000}
+        {x4376df08 0}
+        {0 xc3063488}
+        {x44b50000 x443b4000}
+        {0 x43063488}
+        {x4376df08 0}
+        {x447a4000 x44780000}
+        {xc376df0c 0}
+        {0 x43063488}
+        {x440a8000 x443b4000}
+        {0 xc3063488}}}
+      {cc
+       {f 8192}
+       {p
+        {{{1 xc376df0c}}
+      {{1 0}}}
+        {{{1 0}}
+      {{1 0}}}
+        {{{1 x4376df08}}
+      {{1 0}}}
+        {{{1 0}}
+      {{1 xc3063488}}}
+        {{{1 0}}
+      {{1 0}}}
+        {{{1 0}}
+      {{1 x43063488}}}
+        {{{1 x4376df08}}
+      {{1 0}}}
+        {{{1 0}}
+      {{1 0}}}
+        {{{1 xc376df0c}}
+      {{1 0}}}
+        {{{1 0}}
+      {{1 x43063488}}}
+        {{{1 0}}
+      {{1 0}}}
+        {{{1 0}}
+      {{1 xc3063488}}}}}}
+     {tx 1 x447a4000 x443b4000}
+     {a osw x41200000 osf 0 str 1 spx x44000000 spy x44000000 sb 1 tt x40e00000}}}}}}
+ toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 tt 5 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 tt 7 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 tt 8 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 tt 9 }
+  { createOpenSpline str 1 ssx 1 ssy 1 sf 1 tt 10 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+ toolbar_brush_hardness 0.200000003
+ toolbar_source_transform_scale {1 1}
+ toolbar_source_transform_center {512 512}
+ colorOverlay {0 0 0 0}
+ lifetime_type "all frames"
+ motionblur_shutter_offset_type centred
+ source_black_outside true
+ name Roto22
+ selected true
+ xpos -11553
+ ypos 382
+}
+Read {
+ inputs 0
+ file_type png
+ file "C:/Users/liucx/Downloads/查询 Nuke 节点功能.png"
+ format "2048 2048 0 0 2048 2048 1 square_2K"
+ origset true
+ raw true
+ name Read4
+ selected true
+ xpos -11745
+ ypos 204
+}
+Keyer {
+ operation "blue keyer"
+ range {0.7212191611 0.9212141108 1 1}
+ name Keyer12
+ selected true
+ xpos -11745
+ ypos 349
+}
+Merge2 {
+ inputs 2
+ operation stencil
+ name Merge123
+ selected true
+ xpos -11745
+ ypos 440
+}
+Merge2 {
+ inputs 2
+ name Merge124
+ selected true
+ xpos -11750
+ ypos 538
+}
+Invert {
+ name Invert1
+ selected true
+ xpos -11755
+ ypos 596
+}
+Blur {
+ size 2
+ name Blur44
+ selected true
+ xpos -11472
+ ypos 596
+}
+Gamma {
+ value 0.27
+ name Gamma1
+ selected true
+ xpos -11472
+ ypos 638
+}
+Read {
+ inputs 0
+ file_type png
+ file "C:/Users/liucx/Downloads/查询 Nuke 节点功能.png"
+ format "2048 2048 0 0 2048 2048 1 square_2K"
+ origset true
+ raw true
+ name Read3
+ selected true
+ xpos -11106
+ ypos 34
+}
+Copy {
+ inputs 2
+ from0 rgba.alpha
+ to0 rgba.alpha
+ name Copy4
+ selected true
+ xpos -11199
+ ypos 570
+}
+Group {
+ name L_EdgeExtend_C
+ selected true
+ xpos -11197
+ ypos 685
+ addUserKnob {20 User}
+ addUserKnob {41 hardedge l "<font size=5><b>实的边" T NoOp1.hardedge}
+ addUserKnob {26 ""}
+ addUserKnob {41 add_detail l "<font size=5><b>加细节" T NoOp1.add_detail}
+ addUserKnob {41 add_detail_st l "<font size=5><b>细节饱和度" T NoOp1.add_detail_st}
+ addUserKnob {41 add_detail_gain l "<font size=5><b>细节gain" T NoOp1.add_detail_gain}
+ addUserKnob {41 add_detail_cos l "<font size=5><b>细节对比度" T NoOp1.add_detail_cos}
+ addUserKnob {26 ""}
+ addUserKnob {20 other n 1}
+ other 0
+ addUserKnob {41 extendlayers l "<font size=5><b>延伸长度" T NoOp1.extendlayers}
+ addUserKnob {41 BGmix l "<font size=5><b>背景端口混合" T NoOp1.BGmix}
+ addUserKnob {41 size_wh_edge l "<font size=5><b>延伸值" T NoOp1.size_wh_edge}
+ addUserKnob {41 size_whblend l "<font size=5><b>延伸迭代混色值" T NoOp1.size_whblend}
+ addUserKnob {20 endGroup n -1}
+}
+ Input {
+  inputs 0
+  name src
+  xpos 3804
+  ypos -3650
+ }
+ Dot {
+  name Dot19
+  note_font_size 30
+  xpos 3838
+  ypos -3529
+ }
+set Ncde47c00 [stack 0]
+ Dot {
+  name Dot16
+  note_font_size 30
+  xpos 616
+  ypos -3529
+ }
+set Nebd7d400 [stack 0]
+ Gamma {
+  channels alpha
+  value {{parent.NoOp1.hardedge}}
+  name Gamma1
+  xpos 582
+  ypos -3386
+ }
+ Premult {
+  name Premult2
+  xpos 582
+  ypos -3297
+ }
+ Dot {
+  name Dot21
+  note_font_size 30
+  xpos 616
+  ypos -2925
+ }
+set Nb6bc9800 [stack 0]
+ Dot {
+  name Dot13
+  note_font_size 30
+  xpos 246
+  ypos -2925
+ }
+push $Ncde47c00
+ Dot {
+  name Dot20
+  note_font_size 30
+  xpos 3891
+  ypos 3317
+ }
+set Nc04f5000 [stack 0]
+ Input {
+  inputs 0
+  name mask
+  label "\[value number]"
+  xpos 861
+  ypos 3341
+  number 2
+ }
+ Invert {
+  name Invert3
+  xpos 861
+  ypos 3410
+ }
+push $Nebd7d400
+ Dot {
+  name Dot17
+  note_font_size 30
+  xpos -1196
+  ypos -3529
+ }
+ NoOp {
+  name NoOp2
+  xpos -1207
+  ypos 2261
+ }
+ Dot {
+  name Dot14
+  note_font_size 30
+  xpos -1173
+  ypos 3438
+ }
+ NoOp {
+  name NoOp3
+  xpos 320
+  ypos 3415
+ }
+ Premult {
+  name Premult1
+  xpos 320
+  ypos 3470
+ }
+push $Nb6bc9800
+push $Nb6bc9800
+ Blur {
+  size 1.5
+  name Blur1
+  label "\[value size]"
+  xpos 747
+  ypos -2875
+ }
+ Merge2 {
+  inputs 2
+  name Merge1
+  label "\[value mix]"
+  xpos 582
+  ypos -2870
+ }
+ Dot {
+  name Dot22
+  note_font_size 30
+  xpos 616
+  ypos -2755
+ }
+set Ncde47400 [stack 0]
+push $Ncde47400
+ Blur {
+  size 1.5
+  name Blur22
+  label "\[value size]"
+  xpos 747
+  ypos -2705
+ }
+ Merge2 {
+  inputs 2
+  name Merge2
+  label "\[value mix]"
+  xpos 582
+  ypos -2700
+ }
+ Dot {
+  name Dot23
+  note_font_size 30
+  xpos 616
+  ypos -2603
+ }
+set Nc6096800 [stack 0]
+push $Nc6096800
+ Blur {
+  channels rgba
+  size 1.5
+  name Blur23
+  label "\[value size]"
+  xpos 747
+  ypos -2553
+ }
+ Merge2 {
+  inputs 2
+  name Merge3
+  label "\[value mix]"
+  xpos 582
+  ypos -2548
+ }
+ Dot {
+  name Dot3
+  note_font_size 30
+  xpos 616
+  ypos -2373
+ }
+set N6f952c00 [stack 0]
+ Dot {
+  name Dot18
+  note_font_size 30
+  xpos 616
+  ypos 970
+ }
+ Dot {
+  name Dot15
+  note_font_size 30
+  xpos 616
+  ypos 1846
+ }
+ EdgeBlur {
+  size 2
+  name EdgeBlur1
+  xpos 582
+  ypos 2117
+ }
+push $Ncde47c00
+ Invert {
+  name Invert2
+  xpos 2793
+  ypos 2545
+  hide_input true
+ }
+push $N6f952c00
+ Expression {
+  temp_name0 rc
+  temp_expr0 "isnan(r/a) || isinf(r/a) ? 0 : r/a"
+  temp_name1 gc
+  temp_expr1 "isnan(g/a) || isinf(g/a)  ? 0 : g/a"
+  temp_name2 bc
+  temp_expr2 "isnan(b/a) || isinf(b/a)  ? 0 : b/a"
+  temp_name3 ac
+  temp_expr3 "isnan(a*5) || isinf(a*5)  ? 0 : a*5"
+  expr0 rc
+  expr1 gc
+  expr2 bc
+  expr3 clamp(ac)
+  name Expression2
+  xpos 2134
+  ypos -2376
+ }
+ Premult {
+  name Premult4
+  xpos 2134
+  ypos -2329
+ }
+ Blur {
+  size {{NoOp1.size_wh_edge.w} {NoOp1.size_wh_edge.h}}
+  name Blur2
+  label "\[value size]"
+  xpos 2134
+  ypos -2270
+ }
+ Expression {
+  temp_name0 rc
+  temp_expr0 "isnan(r/a) || isinf(r/a) ? 0 : r/a"
+  temp_name1 gc
+  temp_expr1 "isnan(g/a) || isinf(g/a)  ? 0 : g/a"
+  temp_name2 bc
+  temp_expr2 "isnan(b/a) || isinf(b/a)  ? 0 : b/a"
+  temp_name3 ac
+  temp_expr3 "isnan(a*5) || isinf(a*5)  ? 0 : a*5"
+  expr0 rc
+  expr1 gc
+  expr2 bc
+  expr3 clamp(ac)
+  name Expression1
+  xpos 2134
+  ypos -2198
+ }
+ Grade {
+  white 0.97
+  black_clamp false
+  name Grade1
+  label "\[value white]"
+  xpos 2134
+  ypos -2153
+ }
+ Premult {
+  name Premult5
+  xpos 2134
+  ypos -2092
+ }
+ Dot {
+  name Dot2
+  note_font_size 30
+  xpos 2168
+  ypos -2029
+ }
+set Ncf24f800 [stack 0]
+push $Ncf24f800
+ Blur {
+  size {{NoOp1.size_wh_edge.w} {NoOp1.size_wh_edge.h}}
+  name Blur3
+  label "\[value size]"
+  xpos 2412
+  ypos -2042
+ }
+ Expression {
+  temp_name0 rc
+  temp_expr0 "isnan(r/a) || isinf(r/a) ? 0 : r/a"
+  temp_name1 gc
+  temp_expr1 "isnan(g/a) || isinf(g/a)  ? 0 : g/a"
+  temp_name2 bc
+  temp_expr2 "isnan(b/a) || isinf(b/a)  ? 0 : b/a"
+  temp_name3 ac
+  temp_expr3 "isnan(a*5) || isinf(a*5)  ? 0 : a*5"
+  expr0 rc
+  expr1 gc
+  expr2 bc
+  expr3 clamp(ac)
+  name Expression3
+  xpos 2412
+  ypos -1986
+ }
+ Premult {
+  name Premult6
+  xpos 2412
+  ypos -1939
+ }
+ Merge2 {
+  inputs 2
+  name Merge5
+  label "\[value mix]"
+  xpos 2134
+  ypos -1944
+ }
+ Dot {
+  name Dot4
+  note_font_size 30
+  xpos 2168
+  ypos -1763
+ }
+set Ncf24fc00 [stack 0]
+push $Ncf24fc00
+ Blur {
+  size {{NoOp1.size_wh_edge.w*1.5} {NoOp1.size_wh_edge.w*1.5}}
+  name Blur5
+  label "\[value size]"
+  xpos 2412
+  ypos -1776
+ }
+ Expression {
+  temp_name0 rc
+  temp_expr0 "isnan(r/a) || isinf(r/a) ? 0 : r/a"
+  temp_name1 gc
+  temp_expr1 "isnan(g/a) || isinf(g/a)  ? 0 : g/a"
+  temp_name2 bc
+  temp_expr2 "isnan(b/a) || isinf(b/a)  ? 0 : b/a"
+  temp_name3 ac
+  temp_expr3 "isnan(a*5) || isinf(a*5)  ? 0 : a*5"
+  expr0 rc
+  expr1 gc
+  expr2 bc
+  expr3 clamp(ac)
+  name Expression5
+  xpos 2412
+  ypos -1719
+ }
+ Premult {
+  name Premult8
+  xpos 2412
+  ypos -1673
+ }
+ Merge2 {
+  inputs 2
+  name Merge7
+  label "\[value mix]"
+  xpos 2134
+  ypos -1678
+ }
+ Dot {
+  name Dot1
+  note_font_size 30
+  xpos 2168
+  ypos -1513
+ }
+set N4d8db800 [stack 0]
+push $N4d8db800
+ Blur {
+  size {{NoOp1.size_wh_edge.w*2} {NoOp1.size_wh_edge.h*2}}
+  name Blur4
+  label "\[value size]"
+  xpos 2412
+  ypos -1526
+ }
+ Expression {
+  temp_name0 rc
+  temp_expr0 "isnan(r/a) || isinf(r/a) ? 0 : r/a"
+  temp_name1 gc
+  temp_expr1 "isnan(g/a) || isinf(g/a)  ? 0 : g/a"
+  temp_name2 bc
+  temp_expr2 "isnan(b/a) || isinf(b/a)  ? 0 : b/a"
+  temp_name3 ac
+  temp_expr3 "isnan(a*5) || isinf(a*5)  ? 0 : a*5"
+  expr0 rc
+  expr1 gc
+  expr2 bc
+  expr3 clamp(ac)
+  name Expression4
+  xpos 2412
+  ypos -1470
+ }
+ Premult {
+  name Premult7
+  xpos 2412
+  ypos -1423
+ }
+ Blur {
+  size {{NoOp1.size_whblend.w} {NoOp1.size_whblend.h}}
+  name Blur13
+  label "\[value size]"
+  xpos 2412
+  ypos -1399
+ }
+ Merge2 {
+  inputs 2
+  name Merge6
+  label "\[value mix]"
+  xpos 2134
+  ypos -1394
+ }
+ Dot {
+  name Dot5
+  note_font_size 30
+  xpos 2168
+  ypos -1231
+ }
+set N9ddb2800 [stack 0]
+push $N9ddb2800
+ Blur {
+  size {{NoOp1.size_wh_edge.w*4} {NoOp1.size_wh_edge.h*4}}
+  name Blur6
+  label "\[value size]"
+  xpos 2412
+  ypos -1244
+ }
+ Expression {
+  temp_name0 rc
+  temp_expr0 "isnan(r/a) || isinf(r/a) ? 0 : r/a"
+  temp_name1 gc
+  temp_expr1 "isnan(g/a) || isinf(g/a)  ? 0 : g/a"
+  temp_name2 bc
+  temp_expr2 "isnan(b/a) || isinf(b/a)  ? 0 : b/a"
+  temp_name3 ac
+  temp_expr3 "isnan(a*5) || isinf(a*5)  ? 0 : a*5"
+  expr0 rc
+  expr1 gc
+  expr2 bc
+  expr3 clamp(ac)
+  name Expression6
+  xpos 2412
+  ypos -1188
+ }
+ Premult {
+  name Premult9
+  xpos 2412
+  ypos -1141
+ }
+ Blur {
+  size {{NoOp1.size_whblend.w} {NoOp1.size_whblend.h}}
+  name Blur14
+  label "\[value size]"
+  xpos 2412
+  ypos -1099
+ }
+ Merge2 {
+  inputs 2
+  name Merge8
+  label "\[value mix]"
+  xpos 2134
+  ypos -1094
+ }
+ Dot {
+  name Dot6
+  note_font_size 30
+  xpos 2168
+  ypos -809
+ }
+set N99c4c00 [stack 0]
+push $N99c4c00
+ Blur {
+  size {{NoOp1.size_wh_edge.w*6} {NoOp1.size_wh_edge.h*6}}
+  name Blur7
+  label "\[value size]"
+  xpos 2412
+  ypos -822
+ }
+ Expression {
+  temp_name0 rc
+  temp_expr0 "isnan(r/a) || isinf(r/a) ? 0 : r/a"
+  temp_name1 gc
+  temp_expr1 "isnan(g/a) || isinf(g/a)  ? 0 : g/a"
+  temp_name2 bc
+  temp_expr2 "isnan(b/a) || isinf(b/a)  ? 0 : b/a"
+  temp_name3 ac
+  temp_expr3 "isnan(a*5) || isinf(a*5)  ? 0 : a*5"
+  expr0 rc
+  expr1 gc
+  expr2 bc
+  expr3 clamp(ac)
+  name Expression7
+  xpos 2412
+  ypos -766
+ }
+ Premult {
+  name Premult10
+  xpos 2412
+  ypos -719
+ }
+ Blur {
+  size {{NoOp1.size_whblend.w} {NoOp1.size_whblend.h}}
+  name Blur15
+  label "\[value size]"
+  xpos 2412
+  ypos -695
+ }
+ Merge2 {
+  inputs 2
+  name Merge9
+  label "\[value mix]"
+  xpos 2134
+  ypos -690
+ }
+ Dot {
+  name Dot7
+  note_font_size 30
+  xpos 2168
+  ypos -546
+ }
+set Nb671b400 [stack 0]
+push $Nb671b400
+ Blur {
+  size {{NoOp1.size_wh_edge.w*8} {NoOp1.size_wh_edge.h*8}}
+  name Blur8
+  label "\[value size]"
+  xpos 2412
+  ypos -559
+ }
+ Expression {
+  temp_name0 rc
+  temp_expr0 "isnan(r/a) || isinf(r/a) ? 0 : r/a"
+  temp_name1 gc
+  temp_expr1 "isnan(g/a) || isinf(g/a)  ? 0 : g/a"
+  temp_name2 bc
+  temp_expr2 "isnan(b/a) || isinf(b/a)  ? 0 : b/a"
+  temp_name3 ac
+  temp_expr3 "isnan(a*5) || isinf(a*5)  ? 0 : a*5"
+  expr0 rc
+  expr1 gc
+  expr2 bc
+  expr3 clamp(ac)
+  name Expression8
+  xpos 2412
+  ypos -492
+ }
+ Premult {
+  name Premult11
+  xpos 2412
+  ypos -456
+ }
+ Blur {
+  size {{NoOp1.size_whblend.w*2} {NoOp1.size_whblend.h*2}}
+  name Blur16
+  label "\[value size]"
+  xpos 2412
+  ypos -432
+ }
+ Merge2 {
+  inputs 2
+  name Merge10
+  label "\[value mix]"
+  xpos 2134
+  ypos -427
+ }
+ Dot {
+  name Dot9
+  note_font_size 30
+  xpos 2168
+  ypos -253
+ }
+set N1d3bf800 [stack 0]
+push $N1d3bf800
+ Blur {
+  size {{NoOp1.size_wh_edge.w*8} {NoOp1.size_wh_edge.h*8}}
+  name Blur10
+  label "\[value size]"
+  xpos 2412
+  ypos -266
+ }
+ Expression {
+  temp_name0 rc
+  temp_expr0 "isnan(r/a) || isinf(r/a) ? 0 : r/a"
+  temp_name1 gc
+  temp_expr1 "isnan(g/a) || isinf(g/a)  ? 0 : g/a"
+  temp_name2 bc
+  temp_expr2 "isnan(b/a) || isinf(b/a)  ? 0 : b/a"
+  temp_name3 ac
+  temp_expr3 "isnan(a*5) || isinf(a*5)  ? 0 : a*5"
+  expr0 rc
+  expr1 gc
+  expr2 bc
+  expr3 clamp(ac)
+  name Expression10
+  xpos 2412
+  ypos -210
+ }
+ Premult {
+  name Premult13
+  xpos 2412
+  ypos -165
+ }
+ Blur {
+  size {{NoOp1.size_whblend.w} {NoOp1.size_whblend.h}}
+  name Blur17
+  label "\[value size]"
+  xpos 2412
+  ypos -130
+ }
+ Merge2 {
+  inputs 2
+  name Merge12
+  label "\[value mix]"
+  xpos 2134
+  ypos -125
+ }
+ Dot {
+  name Dot8
+  note_font_size 30
+  xpos 2168
+  ypos 18
+ }
+set Nf780d800 [stack 0]
+push $Nf780d800
+ Blur {
+  size {{NoOp1.size_wh_edge.w*15} {NoOp1.size_wh_edge.h*15}}
+  name Blur9
+  label "\[value size]"
+  xpos 2412
+  ypos 5
+ }
+ Expression {
+  temp_name0 rc
+  temp_expr0 "isnan(r/a) || isinf(r/a) ? 0 : r/a"
+  temp_name1 gc
+  temp_expr1 "isnan(g/a) || isinf(g/a)  ? 0 : g/a"
+  temp_name2 bc
+  temp_expr2 "isnan(b/a) || isinf(b/a)  ? 0 : b/a"
+  temp_name3 ac
+  temp_expr3 "isnan(a*5) || isinf(a*5)  ? 0 : a*5"
+  expr0 rc
+  expr1 gc
+  expr2 bc
+  expr3 clamp(ac)
+  name Expression9
+  xpos 2412
+  ypos 61
+ }
+ Premult {
+  name Premult12
+  xpos 2412
+  ypos 108
+ }
+ Blur {
+  size {{NoOp1.size_whblend.w*2} {NoOp1.size_whblend.h*2}}
+  name Blur18
+  label "\[value size]"
+  xpos 2412
+  ypos 147
+ }
+ Merge2 {
+  inputs 2
+  name Merge11
+  label "\[value mix]"
+  xpos 2134
+  ypos 152
+ }
+ Dot {
+  name Dot10
+  note_font_size 30
+  xpos 2168
+  ypos 309
+ }
+set N3f12d000 [stack 0]
+push $N3f12d000
+ Blur {
+  size {{NoOp1.size_wh_edge.w*15} {NoOp1.size_wh_edge.h*15}}
+  name Blur11
+  label "\[value size]"
+  xpos 2412
+  ypos 296
+ }
+ Expression {
+  temp_name0 rc
+  temp_expr0 "isnan(r/a) || isinf(r/a) ? 0 : r/a"
+  temp_name1 gc
+  temp_expr1 "isnan(g/a) || isinf(g/a)  ? 0 : g/a"
+  temp_name2 bc
+  temp_expr2 "isnan(b/a) || isinf(b/a)  ? 0 : b/a"
+  temp_name3 ac
+  temp_expr3 "isnan(a*5) || isinf(a*5)  ? 0 : a*5"
+  expr0 rc
+  expr1 gc
+  expr2 bc
+  expr3 clamp(ac)
+  name Expression11
+  xpos 2412
+  ypos 352
+ }
+ Premult {
+  name Premult14
+  xpos 2412
+  ypos 399
+ }
+ Blur {
+  size {{NoOp1.size_whblend.w*3} {NoOp1.size_whblend.h*3}}
+  name Blur19
+  label "\[value size]"
+  xpos 2412
+  ypos 432
+ }
+ Merge2 {
+  inputs 2
+  name Merge13
+  label "\[value mix]"
+  xpos 2134
+  ypos 437
+ }
+ Dot {
+  name Dot11
+  note_font_size 30
+  xpos 2168
+  ypos 546
+ }
+set Nbf44a000 [stack 0]
+push $Nbf44a000
+ Blur {
+  size {{NoOp1.size_wh_edge.w*15} {NoOp1.size_wh_edge.h*15}}
+  name Blur12
+  label "\[value size]"
+  xpos 2412
+  ypos 533
+ }
+ Expression {
+  temp_name0 rc
+  temp_expr0 "isnan(r/a) || isinf(r/a) ? 0 : r/a"
+  temp_name1 gc
+  temp_expr1 "isnan(g/a) || isinf(g/a)  ? 0 : g/a"
+  temp_name2 bc
+  temp_expr2 "isnan(b/a) || isinf(b/a)  ? 0 : b/a"
+  temp_name3 ac
+  temp_expr3 "isnan(a*5) || isinf(a*5)  ? 0 : a*5"
+  expr0 rc
+  expr1 gc
+  expr2 bc
+  expr3 clamp(ac)
+  name Expression12
+  xpos 2412
+  ypos 589
+ }
+ Premult {
+  name Premult15
+  xpos 2412
+  ypos 636
+ }
+ Blur {
+  size {{NoOp1.size_whblend.w*5} {NoOp1.size_whblend.h*5}}
+  name Blur20
+  label "\[value size]"
+  xpos 2412
+  ypos 660
+ }
+ Merge2 {
+  inputs 2
+  name Merge14
+  label "\[value mix]"
+  xpos 2134
+  ypos 665
+ }
+push $N3f12d000
+push $N1d3bf800
+push $N99c4c00
+push $N4d8db800
+push $Ncf24f800
+ Switch {
+  inputs 6
+  which {{L_EdgeExtend_C.NoOp1.extendlayers}}
+  name Switch1
+  label "\[value which]"
+  xpos 1757
+  ypos 779
+ }
+ Expression {
+  temp_name0 rc
+  temp_expr0 "isnan(r/a) || isinf(r/a) ? 0 : r/a"
+  temp_name1 gc
+  temp_expr1 "isnan(g/a) || isinf(g/a)  ? 0 : g/a"
+  temp_name2 bc
+  temp_expr2 "isnan(b/a) || isinf(b/a)  ? 0 : b/a"
+  temp_name3 ac
+  temp_expr3 "isnan(a*500) || isinf(a*500)  ? 0 : a*500"
+  expr0 rc
+  expr1 gc
+  expr2 bc
+  expr3 clamp(ac)
+  name Expression13
+  xpos 1757
+  ypos 856
+ }
+set N5920d800 [stack 0]
+ Dot {
+  name Dot12
+  note_font_size 30
+  xpos 2624
+  ypos 859
+ }
+ Input {
+  inputs 0
+  name bg
+  xpos 2872
+  ypos 2110
+  number 1
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy1
+  xpos 2590
+  ypos 2105
+ }
+ Premult {
+  name Premult3
+  xpos 2590
+  ypos 2163
+ }
+push $N5920d800
+ Input {
+  inputs 0
+  name detail
+  label "\[value number]"
+  xpos 1379
+  ypos 884
+  number 3
+ }
+ Grade {
+  gamma 5
+  black_clamp false
+  name Grade2
+  label "\[value white]"
+  xpos 1379
+  ypos 1035
+ }
+set N1d3be800 [stack 0]
+push $N1d3be800
+ Blur {
+  channels rgb
+  size {{parent.NoOp1.add_detail}}
+  name Blur21
+  label "\[value size]"
+  xpos 1216
+  ypos 1125
+ }
+ Merge2 {
+  inputs 2
+  operation divide
+  name Merge17
+  label "\[value mix]"
+  xpos 1379
+  ypos 1125
+ }
+ Grade {
+  gamma 5
+  reverse true
+  black_clamp false
+  name Grade3
+  label "\[value white]"
+  xpos 1379
+  ypos 1197
+ }
+ Grade {
+  white {{parent.NoOp1.add_detail_gain}}
+  gamma {{parent.NoOp1.add_detail_cos}}
+  black_clamp false
+  name Grade4
+  label "\[value white]"
+  xpos 1379
+  ypos 1253
+ }
+ Saturation {
+  saturation {{parent.NoOp1.add_detail_st}}
+  name Saturation1
+  xpos 1379
+  ypos 1327
+ }
+ Remove {
+  channels alpha
+  name Remove1
+  xpos 1379
+  ypos 1419
+ }
+push $N5920d800
+ Merge2 {
+  inputs 2
+  operation multiply
+  name Merge18
+  xpos 1615
+  ypos 1427
+  disable {{"!\[exists parent.input3]"}}
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy4
+  xpos 1757
+  ypos 1539
+ }
+ Premult {
+  name Premult16
+  xpos 1757
+  ypos 1679
+ }
+set Nb9f43000 [stack 0]
+ Keymix {
+  inputs 3
+  mix {{parent.NoOp1.BGmix}}
+  name Keymix1
+  xpos 1757
+  ypos 2481
+ }
+ Merge2 {
+  inputs 2
+  name Merge4
+  label "\[value mix]"
+  xpos 582
+  ypos 2481
+ }
+ Keymix {
+  inputs 3
+  name Keymix2
+  xpos 582
+  ypos 3462
+  disable {{"!\[exists parent.input2]" x1008 0}}
+ }
+push $Nc04f5000
+ Merge2 {
+  inputs 2
+  name Merge19
+  label "\[value mix]"
+  xpos 3857
+  ypos 3462
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy2
+  xpos 4108
+  ypos 3518
+ }
+set Nc12e8c00 [stack 0]
+ Output {
+  name Output1
+  xpos 4108
+  ypos 3750
+ }
+push $Nc12e8c00
+ Premult {
+  name Premult17
+  xpos 4257
+  ypos 3652
+ }
+push $Nc04f5000
+ Premult {
+  name Premult18
+  xpos 4421
+  ypos 3472
+ }
+ NoOp {
+  inputs 0
+  name NoOp1
+  xpos 1582
+  ypos 751
+  addUserKnob {20 User}
+  addUserKnob {7 hardedge R 1e-07 1}
+  hardedge 0.1
+  addUserKnob {26 ""}
+  addUserKnob {7 add_detail l +_detail R 1 20}
+  add_detail 3
+  addUserKnob {7 add_detail_st l +_detail_st}
+  addUserKnob {7 add_detail_gain l +_detail_gain R 0 3}
+  add_detail_gain 1
+  addUserKnob {7 add_detail_cos l +_detail_cos R 0 4}
+  add_detail_cos 1
+  addUserKnob {26 ""}
+  addUserKnob {20 other n 1}
+  addUserKnob {7 extendlayers R 0 5}
+  extendlayers 2
+  addUserKnob {7 BGmix}
+  addUserKnob {14 size_wh_edge l edge_size R 0 100}
+  size_wh_edge {2 2}
+  addUserKnob {14 size_whblend l edgeblend R 0 100}
+  size_whblend {3 3}
+  addUserKnob {20 endGroup n -1}
+ }
+push $Nb9f43000
+push $Nc04f5000
+ Viewer {
+  inputs 2
+  frame_range 1001-1025
+  fps 25
+  input_number 1
+  name Viewer1
+  xpos 3916
+  ypos 3630
+ }
+end_group
+Premult {
+ name Premult8
+ selected true
+ xpos -11197
+ ypos 757
+}
+Grade {
+ multiply {0.9874532223 1.179436803 1.649999976 1}
+ name Grade77
+ selected true
+ xpos -11197
+ ypos 808
+}
+Transform {
+ translate {5 -25}
+ scale 1.230999947
+ center {1024 1024}
+ name Transform54
+ selected true
+ xpos -11197
+ ypos 834
+}
+set N9fcbd800 [stack 0]
+Write {
+ channels rgba
+ file C:/Users/liucx/.nuke/InstallTools/Lenden/tubiao/AltWicon4.png
+ raw true
+ file_type png
+ datatype "16 bit"
+ checkHashOnRead false
+ version 6
+ name Write1
+ selected true
+ xpos -10302
+ ypos 1228
+}
+push $N9fcbd800
+Laplacian {
+ size 19.5
+ name Laplacian14
+ selected true
+ xpos -9930
+ ypos 704
+}
+Keyer {
+ operation "luminance key"
+ name Keyer13
+ selected true
+ xpos -9930
+ ypos 753
+}
+Erode {
+ name Erode8
+ selected true
+ xpos -9930
+ ypos 826
+}
+push $N9fcbd800
+Copy {
+ inputs 2
+ from0 rgba.alpha
+ to0 rgba.alpha
+ name Copy5
+ selected true
+ xpos -10141
+ ypos 826
+}
+Premult {
+ name Premult9
+ selected true
+ xpos -10141
+ ypos 900
+}
+Saturation {
+ saturation 0.31
+ name Saturation12
+ selected true
+ xpos -10141
+ ypos 936
+}
+push $N9fcbd800
+Saturation {
+ saturation 0.31
+ name Saturation11
+ selected true
+ xpos -10377
+ ypos 855
+}
+Merge2 {
+ inputs 2
+ name Merge125
+ selected true
+ xpos -10377
+ ypos 936
+}
+Reformat {
+ name Reformat8
+ selected true
+ xpos -10141
+ ypos 1034
+}
+Reformat {
+ format "200 200 0 0 200 200 1 "
+ name Reformat6
+ selected true
+ xpos -10041
+ ypos 1134
+}

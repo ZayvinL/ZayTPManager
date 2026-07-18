@@ -1,0 +1,10 @@
+set cut_paste_input [stack 0]
+version 15.1 v5
+push $cut_paste_input
+AddTimeCode {
+startcode 00:00:41:17
+name AddTimeCode1
+selected true
+xpos -6346
+ypos 5650
+}

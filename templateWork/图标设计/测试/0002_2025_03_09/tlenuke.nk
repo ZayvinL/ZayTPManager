@@ -1,0 +1,310 @@
+set cut_paste_input [stack 0]
+version 15.1 v5
+push $cut_paste_input
+Ramp {
+ p0 {-108 -52}
+ p1 {2000 1520}
+ name Ramp1
+ selected true
+ xpos -129
+ ypos -108
+}
+set Ndcc1e000 [stack 0]
+Expression {
+ expr0 "sample(r,\[956,800])"
+ name Expression1
+ label "\[value expr0]"
+ selected true
+ xpos -129
+ ypos -21
+ addUserKnob {20 User}
+ addUserKnob {12 position_2d}
+ position_2d {956 780}
+}
+push $Ndcc1e000
+Expression {
+ expr0 "\[sample \[node this] red 956 800]"
+ name Expression2
+ label "\[value expr0]"
+ selected true
+ xpos 27
+ ypos -32
+ addUserKnob {20 User}
+ addUserKnob {12 position_2d}
+ position_2d {956 780}
+}
+Camera3 {
+ inputs 0
+ translate {{curve x1 3.15443211 x16 -1.35443211} {curve x1 2.61314516 x16 2.41314516} {curve x1 8.33885107 x16 7.23885107}}
+ rotate {{curve x1 -10.87806299 x16 -9.87806299} {curve x1 14.19999373 x16 -10.19999373} {curve x1 0 x16 8}}
+ name Camera2
+ selected true
+ xpos -1332
+ ypos 11
+}
+set Ndcc1ec00 [stack 0]
+Card2 {
+ inputs 0
+ translate {0.18 0.5 0.07}
+ control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0 0 0} 
+1 {0 -0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.5 -0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.5 0 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0 0.5 0} 
+1 {0 0 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0.5 0.5 0} 
+1 {0.5 0 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {1 0.5 0} 
+1 {-0.5 0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0 1 0} 
+1 {0 0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0.5 1 0} 
+1 {0.5 0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {1 1 0} }
+ name Card2
+ selected true
+ xpos -673
+ ypos 26
+}
+push $Ndcc1ec00
+Constant {
+ inputs 0
+ channels rgb
+ color 0.282
+ name Constant1
+ selected true
+ xpos -764
+ ypos -166
+}
+Card2 {
+ translate {0 0 -4.71999979}
+ scaling {9.962068558 9.962068558 9.962068558}
+ control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0 0 0} 
+1 {0 -0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.5 -0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.5 0 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0 0.5 0} 
+1 {0 0 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0.5 0.5 0} 
+1 {0.5 0 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {1 0.5 0} 
+1 {-0.5 0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0 1 0} 
+1 {0 0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0.5 1 0} 
+1 {0.5 0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {1 1 0} }
+ name Card1
+ selected true
+ xpos -773
+ ypos -65
+}
+CheckerBoard2 {
+ inputs 0
+ name CheckerBoard1
+ selected true
+ xpos -913
+ ypos -191
+}
+Sphere {
+ translate {-1.039999962 0.4600000083 -1.179999948}
+ name Sphere1
+ selected true
+ xpos -913
+ ypos -69
+}
+ColorBars {
+ inputs 0
+ name ColorBars1
+ selected true
+ xpos -1010
+ ypos -225
+}
+Cylinder {
+ translate {1.399999976 0.03999999911 -1.799999952}
+ scaling {1.491666555 1.491666675 1}
+ name Cylinder1
+ selected true
+ xpos -1010
+ ypos -74
+}
+CheckerBoard2 {
+ inputs 0
+ name CheckerBoard2
+ selected true
+ xpos -1277
+ ypos -224
+}
+ColorWheel {
+ inputs 0
+ gamma 0.45
+ name ColorWheel1
+ selected true
+ xpos -1150
+ ypos -275
+}
+Merge2 {
+ inputs 2
+ operation plus
+ name Merge1
+ selected true
+ xpos -1141
+ ypos -158
+}
+Cube {
+ name Cube1
+ selected true
+ xpos -1121
+ ypos -72
+}
+Scene {
+ inputs 6
+ name Scene1
+ selected true
+ xpos -1007
+ ypos 36
+}
+push 0
+add_layer {Nor Nor.red Nor.green Nor.blue Nor.alpha}
+add_layer {Pos Pos.red Pos.green Pos.blue Pos.alpha}
+ScanlineRender {
+ inputs 3
+ conservative_shader_sampling false
+ motion_vectors_type distance
+ output_shader_vectors true
+ P_channel Nor
+ N_channel Pos
+ name ScanlineRender1
+ selected true
+ xpos -1032
+ ypos 159
+}
+set Nca320000 [stack 0]
+Shuffle2 {
+ fromInput1 {{0} B}
+ in1 Pos
+ fromInput2 {{0} B}
+ mappings "4 Pos.red 0 0 rgba.red 0 0 Pos.green 0 1 rgba.green 0 1 Pos.blue 0 2 rgba.blue 0 2 Pos.alpha 0 3 rgba.alpha 0 3"
+ name Shuffle2
+ selected true
+ xpos -730
+ ypos 208
+}
+push $Nca320000
+Shuffle2 {
+ fromInput1 {{0} B}
+ in1 Nor
+ fromInput2 {{0} B}
+ mappings "4 Nor.red 0 0 rgba.red 0 0 Nor.green 0 1 rgba.green 0 1 Nor.blue 0 2 rgba.blue 0 2 Nor.alpha 0 3 rgba.alpha 0 3"
+ name Shuffle1
+ selected true
+ xpos -872
+ ypos 212
+}
+Axis3 {
+ inputs 0
+ translate {0.18 0.5 0.07}
+ name Axis1
+ selected true
+ xpos -793
+ ypos 33
+}
+Camera3 {
+ inputs 0
+ rotate {0 74.90216827 0}
+ name Camera1
+ selected true
+ xpos -1518
+ ypos 33
+}
+push $Nca320000
+DeepToPoints {
+ inputs 2
+ detail 0.009
+ pointSize 1
+ name DeepToPoints2
+ selected true
+ xpos -1496
+ ypos 168
+ disable true
+}
+Axis4 {
+ inputs 0
+ local_parent_translate {3.01637 2.35389 -4.71868}
+ name Axis2
+ selected true
+ xpos -1363
+ ypos 263
+}
+push $Ndcc1ec00
+push $Nca320000
+DeepToPoints {
+ inputs 2
+ detail 0.0002
+ pointSize 1
+ name DeepToPoints1
+ selected true
+ xpos -1216
+ ypos 220
+}
+set Nca321000 [stack 0]
+Scene {
+ name Scene2
+ selected true
+ xpos -1204
+ ypos 274
+}
+push $Nca321000
+Camera3 {
+ inputs 0
+ translate {{curve x1 3.15443211 x16 7.55443211} {curve x1 2.61314516 x16 2.41314516} {curve x1 8.33885107 x16 7.23885107}}
+ rotate {{curve x1 -10.87806299 x16 -9.87806299} {curve x1 14.19999373 x16 1.19999373} {curve x1 0 x16 8}}
+ name Camera3
+ selected true
+ xpos -1772
+ ypos 184
+}
+set N1fd3f400 [stack 0]
+push $N1fd3f400
+push 0
+Card2 {
+ inputs 0
+ control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0 0 0} 
+1 {0 -0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {0.5 0 0} 
+1 {0.5 -0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666865 0} 0 {0 0 0} 0 {1 0 0} 
+1 {-0.5 0 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0 0.5 0} 
+1 {0 0 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {0.5 0.5 0} 
+1 {0.5 0 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0.1666666716 0} 0 {0 -0.1666666716 0} 0 {1 0.5 0} 
+1 {-0.5 0.5 0} 0 {0.1666666865 0 0} 0 {0 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0 1 0} 
+1 {0 0.5 0} 0 {0.1666666716 0 0} 0 {-0.1666666716 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {0.5 1 0} 
+1 {0.5 0.5 0} 0 {0 0 0} 0 {-0.1666666865 0 0} 0 {0 0 0} 0 {0 -0.1666666865 0} 0 {1 1 0} }
+ name Card3
+ selected true
+ xpos -1584
+ ypos 257
+}
+TransformGeo {
+ inputs 3
+ translate {3.01637 2.35389 -4.71868}
+ look_rotate_x false
+ look_rotate_z false
+ name TransformGeo1
+ selected true
+ xpos -1584
+ ypos 349
+}
+Scene {
+ inputs 2
+ name Scene3
+ selected true
+ xpos -1688
+ ypos 346
+}
+Viewer {
+ inputs 2
+ frame 16
+ frame_range 1-18
+ colour_sample_bbox {-0.38671875 -0.193359375 -0.3857421875 -0.1923828125}
+ samplepoints {{-0.38671875 -0.193359375}
+   }
+ monitorOutNDISenderName "NukeX - untitled - Viewer1"
+ monitorOutOutputTransform rec709
+ name Viewer1
+ selected true
+ xpos 162
+ ypos 189
+}

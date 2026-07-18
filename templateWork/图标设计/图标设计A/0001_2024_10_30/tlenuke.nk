@@ -1,0 +1,463 @@
+set cut_paste_input [stack 0]
+version 13.1 v1
+Constant {
+ inputs 0
+ channels rgb
+ name Constant1
+ selected true
+ xpos -33
+ ypos -180
+}
+Text2 {
+ inputs 0
+ font_size_toolbar 100
+ font_width_toolbar 100
+ font_height_toolbar 100
+ message 完成交付
+ old_message {{23436 25104 20132 20184}
+   }
+ box {0 0 200 200}
+ xjustify center
+ yjustify center
+ transforms {{0 2}
+   }
+ cursor_position 4
+ font {{ KaiTi : Regular : simkai.ttf : 0 }}
+ global_font_scale 0.88
+ center {100 100}
+ cursor_initialised true
+ autofit_bbox false
+ initial_cursor_position {{0 200}
+   }
+ group_animations {{0} imported: 0 selected: items: "root transform/"}
+ animation_layers {{1 11 100 100 0 0 1 1 0 0 0 0}
+   }
+ color {0 0 0 1}
+ color_panelDropped true
+ enable_shadows true
+ shadow_opacity 1
+ shadow_angle 258
+ shadow_distance 7.8
+ shadow_softness 5.2
+ shadow_size 0.75
+ name Text6
+ selected true
+ xpos 1911
+ ypos -151
+}
+Dilate {
+ size 2
+ name Dilate6
+ selected true
+ xpos 1911
+ ypos -94
+}
+Constant {
+ inputs 0
+ channels rgb
+ color {1.155926943 0.1559270024 0.5192835331 1}
+ name Constant7
+ selected true
+ xpos 2052
+ ypos -216
+}
+Merge2 {
+ inputs 2
+ name Merge6
+ selected true
+ xpos 2052
+ ypos -89
+}
+Write {
+ file E:/workpipline/iconset/v006.png
+ file_type png
+ checkHashOnRead false
+ version 1
+ name Write6
+ selected true
+ xpos 2023
+ ypos 33
+}
+Text2 {
+ inputs 0
+ font_size_toolbar 100
+ font_width_toolbar 100
+ font_height_toolbar 100
+ message 任务完成
+ old_message {{20219 21153 23436 25104}
+   }
+ box {0 0 200 200}
+ xjustify center
+ yjustify center
+ transforms {{0 2}
+   }
+ cursor_position 4
+ font {{ KaiTi : Regular : simkai.ttf : 0 }}
+ global_font_scale 0.88
+ center {100 100}
+ cursor_initialised true
+ autofit_bbox false
+ initial_cursor_position {{0 200}
+   }
+ group_animations {{0} imported: 0 selected: items: "root transform/"}
+ animation_layers {{1 11 100 100 0 0 1 1 0 0 0 0}
+   }
+ color {0 0 0 1}
+ color_panelDropped true
+ enable_shadows true
+ shadow_opacity 1
+ shadow_angle 258
+ shadow_distance 7.8
+ shadow_softness 5.2
+ shadow_size 0.75
+ name Text5
+ selected true
+ xpos 1566
+ ypos -133
+}
+Dilate {
+ size 2
+ name Dilate5
+ selected true
+ xpos 1566
+ ypos -76
+}
+Constant {
+ inputs 0
+ channels rgb
+ color {1.155927 0.155927 0.155927 1}
+ color_panelDropped true
+ name Constant3
+ selected true
+ xpos 1707
+ ypos -198
+}
+Merge2 {
+ inputs 2
+ name Merge5
+ selected true
+ xpos 1707
+ ypos -71
+}
+Write {
+ file E:/workpipline/iconset/v005.png
+ file_type png
+ checkHashOnRead false
+ version 1
+ name Write5
+ selected true
+ xpos 1657
+ ypos 12
+}
+Text2 {
+ inputs 0
+ font_size_toolbar 100
+ font_width_toolbar 100
+ font_height_toolbar 100
+ message 任务暂停
+ old_message {{20219 21153 26242 20572}
+   }
+ box {0 0 200 200}
+ xjustify center
+ yjustify center
+ transforms {{0 2}
+   }
+ cursor_position 4
+ font {{ KaiTi : Regular : simkai.ttf : 0 }}
+ global_font_scale 0.88
+ center {100 100}
+ cursor_initialised true
+ autofit_bbox false
+ initial_cursor_position {{0 200}
+   }
+ group_animations {{0} imported: 0 selected: items: "root transform/"}
+ animation_layers {{1 11 100 100 0 0 1 1 0 0 0 0}
+   }
+ color {0 0 0 1}
+ color_panelDropped true
+ enable_shadows true
+ shadow_opacity 1
+ shadow_angle 258
+ shadow_distance 7.8
+ shadow_softness 5.2
+ shadow_size 0.75
+ name Text4
+ selected true
+ xpos 1190
+ ypos -136
+}
+Dilate {
+ size 2
+ name Dilate4
+ selected true
+ xpos 1190
+ ypos -79
+}
+Constant {
+ inputs 0
+ channels rgb
+ color {0.3833368719 0.4600000083 0.3066666722 1}
+ name Constant5
+ selected true
+ xpos 1331
+ ypos -243
+}
+ColorCorrect {
+ name ColorCorrect2
+ selected true
+ xpos 1331
+ ypos -153
+}
+Merge2 {
+ inputs 2
+ name Merge4
+ selected true
+ xpos 1331
+ ypos -74
+}
+Write {
+ file E:/workpipline/iconset/v004.png
+ file_type png
+ checkHashOnRead false
+ version 1
+ name Write4
+ selected true
+ xpos 1331
+ ypos 8
+}
+Text2 {
+ inputs 0
+ font_size_toolbar 100
+ font_width_toolbar 100
+ font_height_toolbar 100
+ message 任务取消
+ old_message {{20219 21153 21462 28040}
+   }
+ box {0 0 200 200}
+ xjustify center
+ yjustify center
+ transforms {{0 2}
+   }
+ cursor_position 4
+ font {{ KaiTi : Regular : simkai.ttf : 0 }}
+ global_font_scale 0.88
+ center {100 100}
+ cursor_initialised true
+ autofit_bbox false
+ initial_cursor_position {{0 200}
+   }
+ group_animations {{0} imported: 0 selected: items: "root transform/"}
+ animation_layers {{1 11 100 100 0 0 1 1 0 0 0 0}
+   }
+ color {0 0 0 1}
+ color_panelDropped true
+ enable_shadows true
+ shadow_opacity 1
+ shadow_angle 258
+ shadow_distance 7.8
+ shadow_softness 5.2
+ shadow_size 0.75
+ name Text3
+ selected true
+ xpos 845
+ ypos -141
+}
+Dilate {
+ size 2
+ name Dilate3
+ selected true
+ xpos 845
+ ypos -84
+}
+Constant {
+ inputs 0
+ channels rgb
+ color {0 0.5 0.00625 1}
+ color_panelDropped true
+ name Constant4
+ selected true
+ xpos 986
+ ypos -248
+}
+ColorCorrect {
+ saturation 0
+ name ColorCorrect1
+ selected true
+ xpos 986
+ ypos -168
+}
+Merge2 {
+ inputs 2
+ name Merge3
+ selected true
+ xpos 986
+ ypos -79
+}
+Write {
+ file E:/workpipline/iconset/v003.png
+ file_type png
+ checkHashOnRead false
+ version 1
+ name Write3
+ selected true
+ xpos 986
+ ypos 30
+}
+Text2 {
+ inputs 0
+ font_size_toolbar 100
+ font_width_toolbar 100
+ font_height_toolbar 100
+ message 正在进行
+ old_message {{27491 22312 36827 34892}
+   }
+ box {0 0 200 200}
+ xjustify center
+ yjustify center
+ transforms {{0 2}
+   }
+ cursor_position 4
+ font {{ KaiTi : Regular : simkai.ttf : 0 }}
+ global_font_scale 0.88
+ center {100 100}
+ cursor_initialised true
+ autofit_bbox false
+ initial_cursor_position {{0 200}
+   }
+ group_animations {{0} imported: 0 selected: items: "root transform/"}
+ animation_layers {{1 11 100 100 0 0 1 1 0 0 0 0}
+   }
+ color {0 0 0 1}
+ color_panelDropped true
+ enable_shadows true
+ shadow_opacity 1
+ shadow_angle 258
+ shadow_distance 7.8
+ shadow_softness 5.2
+ shadow_size 0.75
+ name Text2
+ selected true
+ xpos 481
+ ypos -140
+}
+Dilate {
+ size 2
+ name Dilate2
+ selected true
+ xpos 481
+ ypos -83
+}
+Constant {
+ inputs 0
+ channels rgb
+ color {0.054007 0.171986 0.554007 1}
+ color_panelDropped true
+ name Constant6
+ selected true
+ xpos 622
+ ypos -239
+}
+Merge2 {
+ inputs 2
+ name Merge2
+ selected true
+ xpos 622
+ ypos -78
+}
+Write {
+ file E:/workpipline/iconset/v002.png
+ file_type png
+ checkHashOnRead false
+ version 1
+ name Write2
+ selected true
+ xpos 622
+ ypos 16
+}
+push $cut_paste_input
+Text2 {
+ font_size_toolbar 100
+ font_width_toolbar 100
+ font_height_toolbar 100
+ message 准备开始
+ old_message {{20934 22791 24320 22987}
+   }
+ box {0 0 200 200}
+ xjustify center
+ yjustify center
+ transforms {{0 2}
+   }
+ cursor_position 4
+ font {{ KaiTi : Regular : simkai.ttf : 0 }}
+ global_font_scale 0.88
+ center {100 100}
+ cursor_initialised true
+ autofit_bbox false
+ initial_cursor_position {{0 200}
+   }
+ group_animations {{0} imported: 0 selected: items: "root transform/"}
+ animation_layers {{1 11 100 100 0 0 1 1 0 0 0 0}
+   }
+ color {0 0 0 1}
+ color_panelDropped true
+ enable_shadows true
+ shadow_opacity 1
+ shadow_angle 258
+ shadow_distance 7.8
+ shadow_softness 5.2
+ shadow_size 0.75
+ name Text1
+ selected true
+ xpos 116
+ ypos -154
+}
+Dilate {
+ size 2
+ name Dilate1
+ selected true
+ xpos 116
+ ypos -97
+}
+Constant {
+ inputs 0
+ channels rgb
+ color {0.586667 0.586667 0.086667 1}
+ color_panelDropped true
+ name Constant2
+ selected true
+ xpos 255
+ ypos -275
+}
+Merge2 {
+ inputs 2
+ name Merge1
+ selected true
+ xpos 255
+ ypos -86
+}
+Reformat {
+ type scale
+ scale 11
+ name Reformat1
+ selected true
+ xpos 255
+ ypos -59
+ disable true
+}
+Write {
+ file E:/workpipline/iconset/v001.png
+ file_type png
+ checkHashOnRead false
+ version 4
+ name Write1
+ selected true
+ xpos 255
+ ypos -10
+}
+ContactSheet {
+ inputs 6
+ name ContactSheet1
+ selected true
+ xpos 1380
+ ypos 229
+}

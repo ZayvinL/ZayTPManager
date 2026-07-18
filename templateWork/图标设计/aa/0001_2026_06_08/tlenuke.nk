@@ -1,0 +1,309 @@
+set cut_paste_input [stack 0]
+version 16.0 v3
+Radial {
+ inputs 0
+ invert true
+ area {-610 -630 3225 1260}
+ name Radial2
+ selected true
+ xpos -1253
+ ypos 904
+}
+Dot {
+ name Dot1
+ selected true
+ xpos -1345
+ ypos 948
+}
+set N165ef800 [stack 0]
+Invert {
+ name Invert1
+ selected true
+ xpos -1379
+ ypos 1055
+}
+push $N165ef800
+push $cut_paste_input
+Radial {
+ invert true
+ area {-160 -112 2764 1546}
+ name Radial1
+ selected true
+ xpos -1379
+ ypos 852
+}
+Read {
+ inputs 0
+ file_type mov
+ file "E:/projectA_test/Sequence 1/shot_0010/nuke/mov/shot_0010__v01.mov"
+ format "2560 1440 0 0 2560 1440 1 Setformat 2560 x 1440"
+ last 24
+ origlast 24
+ origset true
+ name Read2
+ selected true
+ xpos -1480
+ ypos 336
+}
+Transform {
+ scale 1.38
+ center {1280 720}
+ name Transform1
+ selected true
+ xpos -1548
+ ypos 455
+}
+Blur {
+ channels rgba
+ size 100
+ name Blur1
+ selected true
+ xpos -1548
+ ypos 497
+}
+set N91fef700 [stack 0]
+Shuffle2 {
+ fromInput1 {
+  {0}
+  B
+ }
+ fromInput2 {
+  {0}
+  B
+ }
+ mappings "4 rgba.red 0 0 rgba.red 0 0 rgba.green 0 1 rgba.green 0 1 rgba.blue 0 2 rgba.blue 0 2 black -1 -1 rgba.alpha 0 3"
+ name Shuffle2
+ selected true
+ xpos -1436
+ ypos 507
+}
+Text2 {
+ font_size_toolbar 100
+ font_width_toolbar 100
+ font_height_toolbar 100
+ message "ZayTag 路径标签系统"
+ old_message {
+  {90 97 121 84 97 103 32 36335 24452 26631 31614 31995 32479}
+ }
+ box {347.5 639.5 2248.5 840.5}
+ transforms {
+  {0 2}
+ }
+ cursor_position 13
+ font {{ SimHei : Regular : simhei.ttf : 0 }}
+ global_font_scale 2
+ center {1280 720}
+ cursor_initialised true
+ initial_cursor_position {
+  {347.5 840.5}
+ }
+ group_animations {
+  {0}
+  imported:
+  0
+  selected:
+  items:
+  "root transform/"
+ }
+ animation_layers {
+  {1 11 1280 720 0 0 1 1 0 0 0 0}
+ }
+ shadow_opacity 0.824
+ shadow_angle 303
+ shadow_distance 24.9
+ shadow_softness 7.05
+ shadow_size 2.98
+ name Text1
+ selected true
+ xpos -1407
+ ypos 565
+}
+set N8f3bd200 [stack 0]
+push $N8f3bd200
+push $N91fef700
+Copy {
+ inputs 2
+ from0 rgba.alpha
+ to0 rgba.alpha
+ name Copy1
+ selected true
+ xpos -1548
+ ypos 589
+}
+Premult {
+ name Premult1
+ selected true
+ xpos -1548
+ ypos 645
+}
+push $N91fef700
+Shuffle2 {
+ fromInput1 {
+  {0}
+  B
+ }
+ fromInput2 {
+  {0}
+  B
+ }
+ mappings "4 rgba.red 0 0 rgba.red 0 0 rgba.green 0 1 rgba.green 0 1 rgba.blue 0 2 rgba.blue 0 2 black -1 -1 rgba.alpha 0 3"
+ name Shuffle1
+ selected true
+ xpos -1646
+ ypos 508
+}
+Text2 {
+ font_size_toolbar 100
+ font_width_toolbar 100
+ font_height_toolbar 100
+ message "ZayTag 路径标签系统"
+ old_message {
+  {90 97 121 84 97 103 32 36335 24452 26631 31614 31995 32479}
+ }
+ box {347.5 639.5 2248.5 840.5}
+ transforms {
+  {0 2}
+ }
+ cursor_position 12
+ font {{ SimHei : Regular : simhei.ttf : 0 }}
+ global_font_scale 2
+ center {1280 720}
+ cursor_initialised true
+ initial_cursor_position {
+  {347.5 840.5}
+ }
+ group_animations {
+  {0}
+  imported:
+  0
+  selected:
+  items:
+  "root transform/"
+ }
+ animation_layers {
+  {1 11 1280 720 0 0 1 1 0 0 0 0}
+ }
+ enable_shadows true
+ shadow_opacity 0.824
+ shadow_angle 303
+ shadow_distance 24.9
+ shadow_softness 7.05
+ shadow_size 2.98
+ name Text2
+ selected true
+ xpos -1705
+ ypos 539
+}
+Constant {
+ inputs 0
+ channels rgb
+ name Constant1
+ selected true
+ xpos -1790
+ ypos 434
+}
+Copy {
+ inputs 2
+ from0 rgba.alpha
+ to0 rgba.alpha
+ name Copy2
+ selected true
+ xpos -1838
+ ypos 547
+}
+Premult {
+ name Premult2
+ selected true
+ xpos -1838
+ ypos 607
+}
+push $N91fef700
+Merge2 {
+ inputs 2
+ name Merge2
+ selected true
+ xpos -1720
+ ypos 720
+}
+Merge2 {
+ inputs 2
+ name Merge1
+ selected true
+ xpos -1548
+ ypos 753
+}
+Merge2 {
+ inputs 2
+ operation plus
+ mix 0.506
+ name Merge3
+ selected true
+ xpos -1548
+ ypos 835
+}
+Chromatic_Aberration {
+ name Chromatic_Aberration1
+ selected true
+ xpos -1548
+ ypos 883
+ Red 0.016
+ Green -0.002
+ Blue 0.002
+}
+Grade {
+ inputs 1+1
+ white 0.72
+ gamma 0.96
+ name Grade1
+ selected true
+ xpos -1548
+ ypos 935
+}
+ColorCorrect {
+ inputs 1+1
+ saturation 0.74
+ contrast 1.06
+ name ColorCorrect1
+ selected true
+ xpos -1548
+ ypos 1071
+}
+ColorCorrect {
+ inputs 1+1
+ saturation 1.16
+ contrast 1.23
+ name ColorCorrect2
+ selected true
+ xpos -1548
+ ypos 1127
+}
+Crop {
+ box {0 0 2560 1440}
+ crop false
+ name Crop1
+ selected true
+ xpos -1548
+ ypos 1181
+}
+Colorspace {
+ colorspace_out 2.20
+ name Colorspace1
+ selected true
+ xpos -1548
+ ypos 1232
+}
+Write {
+ file D:/ZayTag_01.png
+ file_type png
+ raw true
+ colorspace sRGB
+ checkHashOnRead false
+ version 4
+ ocioColorspace scene_linear
+ display default
+ view sRGB
+ name Write1
+ selected true
+ xpos -1548
+ ypos 1283
+}

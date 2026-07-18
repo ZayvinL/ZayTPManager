@@ -1,0 +1,429 @@
+set cut_paste_input [stack 0]
+version 13.2 v3
+push $cut_paste_input
+Group {
+ name RandomV4Cards
+ tile_color 0xff0000ff
+ selected true
+ xpos 661
+ ypos 999
+ addUserKnob {20 User l 功能}
+ addUserKnob {20 groupsample l "Sample Panel" n 1}
+ addUserKnob {2 pointspath l 点云数据路径}
+ pointspath E:/invsss/DBsave/
+ addUserKnob {22 RenderPoints l "Sample 3d" t 采样三维空间选中的点信息 T "import nuke\nimport nukescripts\nimport time\nimport sqlite3\n\n\ndef rendercc(pointspath):\n    # 连接到 SQLite 数据库，设置隔离级别为 None 开启自动提交模式\n    conn = sqlite3.connect(f'\{pointspath\}', isolation_level=None)\n    cursor = conn.cursor()\n\n    # 创建表，使用自增 id\n    cursor.execute('''\n    CREATE TABLE IF NOT EXISTS test_table (\n        id INTEGER PRIMARY KEY AUTOINCREMENT,\n        col1 REAL,\n        col2 REAL,\n        col3 REAL\n    )\n    ''')\n\n    # 清空表\n    cursor.execute('DELETE FROM test_table;')\n\n    # 批量大小\n    batch_size = 1000\n    batch = \[]\n    # 已处理的数据量\n    processed_count = 0\n    # 开始时间\n    start_time = time.time()\n\n    try:\n        # 手动开始事务\n        conn.execute('BEGIN')\n\n        # 进度条\n        global rendertask01\n        rendertask01 = nuke.ProgressTask(\"正在创建 : \")\n        data_generator = nukescripts.snap3d.selectedPoints()\n        \n        \"\"\"\n        # bak\n        # selected_points = nukescripts.snap3d.selectedPoints()\n        # selected_points = nukescripts.snap3d.selectedVertexInfos()\n        # print(next(selected_points))\n        \n        \"\"\"\n\n\n        for dv in data_generator:\n            # 检查用户是否取消了任务\n            if rendertask01.isCancelled():\n                print(\"任务已取消，正在回滚事务...\")\n                conn.execute('ROLLBACK')\n                print(\"事务已回滚，任务终止。\")\n                del rendertask01\n                return\n\n            dtv = (dv.x, dv.y, dv.z)\n            batch.append(dtv)\n            processed_count += 1\n\n            # 进度条进度\n            rendertask01.setProgress(processed_count // 1000)\n            rendertask01.setMessage(f\"Render \{processed_count\}. . . .\")\n\n            if len(batch) == batch_size:\n                # 批量插入数据\n                cursor.executemany('INSERT INTO test_table (col1, col2, col3) VALUES (?, ?, ?)', batch)\n                batch = \[]\n\n            # 计算已处理数据量的长度\n            progress_str = \"-\" * (processed_count // 1000)\n            # 计算已用时间\n            elapsed_time = time.time() - start_time\n            # 输出进度信息\n            print(f\"\\r已处理: \{processed_count\} 条数据 | 进度: \[\{progress_str\}] | 用时: \{elapsed_time:.2f\} 秒\", end=\"\", flush=True)\n\n        del rendertask01\n\n        # 插入剩余的数据\n        if batch:\n            cursor.executemany('INSERT INTO test_table (col1, col2, col3) VALUES (?, ?, ?)', batch)\n\n        # 提交事务\n        conn.execute('COMMIT')\n        print(\"\\n数据插入成功\")\n    except sqlite3.IntegrityError as e:\n        # 处理数据库插入冲突异常\n        conn.execute('ROLLBACK')\n        print(f\"\\n数据插入失败，主键冲突: \{e\}\")\n    except Exception as e:\n        # 处理其他异常\n        conn.execute('ROLLBACK')\n        print(f\"\\n数据插入失败: \{e\}\")\n    finally:\n        # 关闭连接\n        conn.close()\n\n\n\n\ntn = nuke.thisNode()\n\n\npointspath = tn\[\"pointspath\"].value() + \"PointsSample.db\" \n\n\nrendercc(pointspath)" +STARTLINE}
+ addUserKnob {22 python_button_1 l "Sample 2d" t 采样二维空间选中的点信息 -STARTLINE T "import nuke\nimport nukescripts\nimport time\nimport sqlite3\n\n\ndef renderccpostion(samplergb,pointspath):\n    # 连接到 SQLite 数据库，设置隔离级别为 None 开启自动提交模式\n    conn = sqlite3.connect(f'\{pointspath\}', isolation_level=None)\n    cursor = conn.cursor()\n\n    # 创建表，使用自增 id\n    cursor.execute('''\n    CREATE TABLE IF NOT EXISTS test_table (\n        id INTEGER PRIMARY KEY AUTOINCREMENT,\n        col1 REAL,\n        col2 REAL,\n        col3 REAL\n    )\n    ''')\n\n    # 清空表\n    cursor.execute('DELETE FROM test_table;')\n\n    # 批量大小\n    batch_size = 1000\n    batch = \[]\n    # 已处理的数据量\n    processed_count = 0\n    # 开始时间\n    start_time = time.time()\n\n    try:\n        # 手动开始事务\n        conn.execute('BEGIN')\n\n        # 进度条\n        global rendertask01\n        rendertask01 = nuke.ProgressTask(\"正在创建 : \")\n\n        data_generator = samplergb\n\n        for dv in data_generator:\n            # 检查用户是否取消了任务\n            if rendertask01.isCancelled():\n                print(\"任务已取消，正在回滚事务...\")\n                conn.execute('ROLLBACK')\n                print(\"事务已回滚，任务终止。\")\n                del rendertask01\n                return\n\n            dtv = (dv\[0], dv\[1], dv\[2])\n            batch.append(dtv)\n            processed_count += 1\n\n            # 进度条进度\n            rendertask01.setProgress(processed_count // 100)\n            rendertask01.setMessage(f\"Render \{processed_count\}. . . .\")\n\n            if len(batch) == batch_size:\n                # 批量插入数据\n                cursor.executemany('INSERT INTO test_table (col1, col2, col3) VALUES (?, ?, ?)', batch)\n                batch = \[]\n\n            # 计算已处理数据量的长度\n            progress_str = \"-\" * (processed_count // 100)\n            # 计算已用时间\n            elapsed_time = time.time() - start_time\n            # 输出进度信息\n            print(f\"\\r已处理: \{processed_count\} 条数据 | 进度: \[\{progress_str\}] | 用时: \{elapsed_time:.2f\} 秒\", end=\"\", flush=True)\n\n        del rendertask01\n\n        # 插入剩余的数据\n        if batch:\n            cursor.executemany('INSERT INTO test_table (col1, col2, col3) VALUES (?, ?, ?)', batch)\n\n        # 提交事务\n        conn.execute('COMMIT')\n        print(\"\\n数据插入成功\")\n    except sqlite3.IntegrityError as e:\n        # 处理数据库插入冲突异常\n        conn.execute('ROLLBACK')\n        print(f\"\\n数据插入失败，主键冲突: \{e\}\")\n    except Exception as e:\n        # 处理其他异常\n        conn.execute('ROLLBACK')\n        print(f\"\\n数据插入失败: \{e\}\")\n    finally:\n        # 关闭连接\n        conn.close()\n\n\n\ntn = nuke.thisNode()\ntn.begin()\ntn.end()\nSampleNodeName = tn\[\"SampleNodeName\"].value()\nnd = nuke.toNode(SampleNodeName)\n\npointspath = tn\[\"pointspath\"].value() + \"PointsSample.db\" \n\n\nsamplebox = tn\[\"samplebox\"]\nxsize = int(tn\[\"xsize\"].value())\nysize = int(tn\[\"ysize\"].value())\n\n# 定义范围和间隔\nx_start = int(samplebox.value(0))\ny_start = int(samplebox.value(1))\nx_end = int(samplebox.value(2))\ny_end = int(samplebox.value(3))\nx_interval = xsize\ny_interval = ysize\n\n# 初始化存储坐标的列表和计数器\ncoordinates = \[]\ncount = 0\n\n# 生成符合要求的坐标\nfor x in range(x_start, x_end + 1, x_interval):\n    for y in range(y_start, y_end + 1, y_interval):\n        # 将坐标添加到列表中\n        coordinates.append(\[x, y])\n        # 计数器加 1\n        count += 1\n\n\nsamplergb = \[]\n\nfor coord in coordinates:\n    xt = coord\[0]\n    yt = coord\[1]\n    \n    xv = nuke.sample(nd,\"red\",xt,yt)\n    yv = nuke.sample(nd,\"green\",xt,yt)\n    zv = nuke.sample(nd,\"blue\",xt,yt)\n    sv = \[xv,yv,zv]\n    print(sv)\n    samplergb.append(sv)\n\n\n\nif samplergb != \[]:\n    renderccpostion(samplergb,pointspath)"}
+ addUserKnob {22 printdata -STARTLINE T "import sqlite3\nimport nuke\nimport nukescripts\n\n\n\ntn = nuke.thisNode()\n\n\npointspath = tn\[\"pointspath\"].value() + \"PointsSample.db\" \n\n# 数据库文件路径，需替换为实际路径\ndatabase_path = pointspath\n# 表名，需替换为实际表名\ntable_name = 'test_table'\n\ntry:\n    # 连接到 SQLite 数据库\n    conn = sqlite3.connect(database_path)\n    cursor = conn.cursor()\n\n    # 执行 SQL 查询，获取指定列的数据\n    cursor.execute(f\"SELECT col1, col2, col3 FROM \{table_name\}\")\n    rows = cursor.fetchall()\n\n    # 打印表头\n    print(\"col1, col2, col3\")\n    # 打印每一行数据\n    for row in rows:\n        print(row)\n\nexcept sqlite3.Error as e:\n    print(f\"发生错误: \{e\}\")\nfinally:\n    # 关闭数据库连接\n    if conn:\n        conn.close()"}
+ addUserKnob {26 "" +STARTLINE}
+ addUserKnob {1 SampleNodeName l PostionNode t "postion 节点名"}
+ SampleNodeName Read3
+ addUserKnob {22 python_button_2 l "GET Node" t 获取选中节点名 -STARTLINE T "import nuke\n\ntn = nuke.thisNode()\ntn.begin()\ntn.end()\nSampleNodeName = tn\[\"SampleNodeName\"]\nnds = nuke.selectedNodes()\nif nds != \[]:\n    SampleNodeName.setValue(nds\[0].name())\nelse:\n    SampleNodeName.setValue(\"请选中Postion的Read节点,单击Get\")"}
+ addUserKnob {22 python_button l "2d Sample Point Count" t 统计二维采样点数量 -STARTLINE T "import nuke\n\ntn = nuke.thisNode()\n\nsamplebox = tn\[\"samplebox\"]\nxsize = int(tn\[\"xsize\"].value())\nysize = int(tn\[\"ysize\"].value())\n\n# 定义范围和间隔\nx_start = int(samplebox.value(0))\ny_start = int(samplebox.value(1))\nx_end = int(samplebox.value(2))\ny_end = int(samplebox.value(3))\nx_interval = xsize\ny_interval = ysize\n\n# 初始化存储坐标的列表和计数器\ncoordinates = \[]\ncount = 0\n\n# 生成符合要求的坐标\nfor x in range(x_start, x_end + 1, x_interval):\n    for y in range(y_start, y_end + 1, y_interval):\n        # 将坐标添加到列表中\n        coordinates.append(\[x, y])\n        # 计数器加 1\n        count += 1\n        \nnuke.message(f\"采样点数量为: \{count\}\")"}
+ addUserKnob {15 samplebox l "2d box" t "2d 采样范围"}
+ samplebox {0 0 2048 1556}
+ addUserKnob {22 rest_button l rest -STARTLINE T "import nuke\n\ntn = nuke.thisNode()\n\nsamplebox = tn\[\"samplebox\"]\nww = nuke.root().width()\nhh = nuke.root().height()\nsamplebox.setValue(\[0,0,ww,hh])"}
+ addUserKnob {22 python_button_4 l checkdata -STARTLINE T "import nuke\nimport nukescripts\nimport sqlite3\n\ntn = nuke.thisNode()\ntn.begin()\ntn.end()\nSampleNodeName = tn\[\"SampleNodeName\"].value()\nnd = nuke.toNode(SampleNodeName)\n\npointspath = tn\[\"pointspath\"].value() + \"PointsSample.db\" \n\n\nsamplebox = tn\[\"samplebox\"]\nxsize = int(tn\[\"xsize\"].value())\nysize = int(tn\[\"ysize\"].value())\n\n# 定义范围和间隔\nx_start = int(samplebox.value(0))\ny_start = int(samplebox.value(1))\nx_end = int(samplebox.value(2))\ny_end = int(samplebox.value(3))\nx_interval = xsize\ny_interval = ysize\n\n# 初始化存储坐标的列表和计数器\ncoordinates = \[]\ncount = 0\n\n# 生成符合要求的坐标\nfor x in range(x_start, x_end + 1, x_interval):\n    for y in range(y_start, y_end + 1, y_interval):\n        # 将坐标添加到列表中\n        coordinates.append(\[x, y])\n        # 计数器加 1\n        count += 1\n\n\nsamplergb = \[]\n\nfor coord in coordinates:\n    \n    xt = coord\[0]\n    yt = coord\[1]\n    \n    xv = nuke.sample(nd,\"red\",xt,yt)\n    yv = nuke.sample(nd,\"green\",xt,yt)\n    zv = nuke.sample(nd,\"blue\",xt,yt)\n    sv = \[xv,yv,zv]\n    print(sv)\n    samplergb.append(sv)"}
+ addUserKnob {7 xsize R 10 1000}
+ xsize 500
+ addUserKnob {7 ysize R 10 1000}
+ ysize 50
+ addUserKnob {26 "" +STARTLINE}
+ addUserKnob {22 python_button_3 l "SET  spatial extent" t 获取三维空间范围 T "import nuke\nimport nukescripts\nimport sqlite3\n\n\ntn = nuke.thisNode()\ntn.begin()\ntn.end()\n\n\npointspath = tn\[\"pointspath\"].value() + \"PointsSample.db\" \n\nposition_3dfrom = tn\[\"position_3dfrom\"]\nposition_3dto = tn\[\"position_3dto\"]\n\n# 连接到数据库\nconn = sqlite3.connect(f'\{pointspath\}')\n# 创建游标对象\ncursor = conn.cursor()\n\ntry:\n    # 查找 col1 列的最小值\n    cursor.execute('SELECT MIN(col1) FROM test_table')\n    min_value_x = cursor.fetchone()\[0]\n\n    # 查找 col1 列的最大值\n    cursor.execute('SELECT MAX(col1) FROM test_table')\n    max_value_x = cursor.fetchone()\[0]\n    \n    #---------------------------------\n    # 查找 col1 列的最小值\n    cursor.execute('SELECT MIN(col2) FROM test_table')\n    min_value_y = cursor.fetchone()\[0]\n\n    # 查找 col1 列的最大值\n    cursor.execute('SELECT MAX(col2) FROM test_table')\n    max_value_y = cursor.fetchone()\[0]\n    \n    #---------------------------------\n    \n    # 查找 col1 列的最小值\n    cursor.execute('SELECT MIN(col3) FROM test_table')\n    min_value_z = cursor.fetchone()\[0]\n\n    # 查找 col1 列的最大值\n    cursor.execute('SELECT MAX(col3) FROM test_table')\n    max_value_z = cursor.fetchone()\[0]\n    \n    mins = \[min_value_x,min_value_y,min_value_z]\n    maxs = \[max_value_x,max_value_y,max_value_z]\n    \n    position_3dfrom.setValue(mins)\n    position_3dto.setValue(maxs)\n\n\n\nexcept sqlite3.Error as e:\n    print(f\"数据库操作出错: \{e\}\")\nfinally:\n    # 关闭游标和连接\n    cursor.close()\n    conn.close()" +STARTLINE}
+ addUserKnob {13 position_3dfrom l min t From}
+ position_3dfrom {-1597.103516 -1597.103516 -3547.579102}
+ addUserKnob {13 position_3dto l max t To}
+ position_3dto {1597.103516 1597.103516 3547.579102}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {13 position_3dfd l "Add Size" t 浮动范围}
+ addUserKnob {26 ""}
+ addUserKnob {6 lookx +STARTLINE}
+ lookx true
+ addUserKnob {6 looky -STARTLINE}
+ looky true
+ addUserKnob {6 lookz -STARTLINE}
+ lookz true
+ addUserKnob {26 ""}
+ addUserKnob {6 ImageInput t 每个Card设置单独的image接口 +STARTLINE}
+ addUserKnob {6 ShowInputName t 显示端口 -STARTLINE}
+ addUserKnob {6 zcheck t "近大远小 缩放比例" -STARTLINE}
+ zcheck true
+ addUserKnob {6 closeCheckbord -STARTLINE}
+ addUserKnob {3 seedsize}
+ seedsize -2653
+ addUserKnob {22 RondomSize l 更新种子 -STARTLINE T "import random\nimport nuke\n\ntn = nuke.thisNode()\n\ntn.begin()\nransize = random.randint(-9999,9999)\nseedsize = tn\[\"seedsize\"].setValue(ransize)\n\n#tn\[\"CteatCards\"].execute()\ntn.end()"}
+ addUserKnob {3 num l 数量 -STARTLINE}
+ num 10
+ addUserKnob {22 CteatCards l "创建随机Card A" t 随机点在采样的范围内 -STARTLINE T "import random\nimport nuke\nimport sqlite3\n# import math\n\ntn = nuke.thisNode()\n\ntn.begin()\n\ndef deselect():\n\tfor i in nuke.allNodes():\n\t\ti.setSelected(False)\ndef clear():\n\tfor i in nuke.allNodes():\n\t\tif i\['name'].getValue() not in \['cam','Output1','TransformGeoAll',\"Scenecc\"]:\n\t\t\tnuke.delete(i)\nclear()\ndeselect()\n\ntransformGeos = nuke.toNode('TransformGeoAll')\nOutput = nuke.toNode('Output1')\ncam = nuke.toNode('cam')\nscj = nuke.toNode(\"Scenecc\")\njdyx = tn\[\"zcheck\"].value()\nimages = tn\[\"ImageInput\"].value()\n\n\n\n\nnum = int(tn\['num'].getValue())\n# col = int(tn\['col'].getValue())\nseedsize = tn\[\"seedsize\"].getValue()\n# 种子\nrandom.seed(seedsize)\n\n#3d空间的范围定位,这里计算采样的最大值和最小值来计算\nposition_3dfrom = tn\[\"position_3dfrom\"].value()\nposition_3dto = tn\[\"position_3dto\"].value()\nposition_3dfd = tn\[\"position_3dfd\"].value()\n\n\nfdx = int(position_3dfd\[0])\nfdy = int(position_3dfd\[1])\nfdz = int(position_3dfd\[2])\n\nxrdfrom = int(position_3dfrom\[0])\nxrdto = int(position_3dto\[0])\n\nyrdfrom = int(position_3dfrom\[1])\nyrdto = int(position_3dto\[1])\n\n\nzrdfrom = int(position_3dfrom\[2])\nzrdto = int(position_3dto\[2])\n\n# 增加一个浮动值\nxrdfrom = xrdfrom + fdx if xrdfrom > 0 else xrdfrom - fdx\nxrdto = xrdto + fdx if xrdto > 0 else xrdto - fdx\n\n\nyrdfrom = yrdfrom + fdy if yrdfrom > 0 else yrdfrom - fdy\nyrdto = yrdto + fdy if yrdto > 0 else yrdto - fdy\n\n\nzrdfrom = zrdfrom + fdz if zrdfrom > 0 else zrdfrom - fdz\nzrdto = zrdto + fdz if zrdto > 0 else zrdto - fdz\n\n\n# 这里找到相机的xy坐标\n\nxps = int(cam\['xpos'].getValue())\nyps = int(cam\['ypos'].getValue())\n\nif not images:\n    checkbd = nuke.createNode(\"CheckerBoard2\",inpanel=False)\n    checkbd.setXYpos(xps+(700),yps+0)\nelse:\n    imgs = \[]\n    for i in range(0,num):\n        img = nuke.createNode(\"Input\",inpanel=False)\n        img.setXYpos(xps+200+(200*i),yps-200)\n        img\[\"label\"].setValue(f\"Input\{i+1\}\")\n        imgs.append(img)\n    \n    texs = \[]\n    for i in range(0,num):\n        tex = nuke.createNode(\"Text2\",inpanel=False)\n        tex\[\"box\"].setExpression(\"0\",0)\n        tex\[\"box\"].setExpression(\"0\",1)\n        tex\[\"box\"].setExpression(\"this.input.width\",2)\n        tex\[\"box\"].setExpression(\"this.input.height\",3)\n        tex\[\"xjustify\"].setValue(1)\n        tex\[\"yjustify\"].setValue(1)\n\n        tex\[\"replace\"].setExpression(\"parent.closeCheckbord\")\n        tex\[\"disable\"].setExpression(\"!parent.ShowInputName\")\n\n        tex\[\"message\"].setValue(f\"Input\{i+1\}\")\n        tex\[\"label\"].setValue(f\"Input\{i+1\}\")\n        tex.setXYpos(xps+200+(200*i),yps-50)\n        tex.setInput(0,imgs\[i])\n        texs.append(tex)\n\n        \n\n# card created\ncards = \[]\ngeos = \[]\n\n# 这里计算一定数量的随机值,在3d空间范围内\n# random_z = \[random.randint(zrdfrom if zrdfrom < zrdto else zrdto, zrdfrom if zrdfrom > zrdto else zrdto) for _ in range(num)]\nrandom_z = \[random.uniform(zrdfrom if zrdfrom < zrdto else zrdto, zrdfrom if zrdfrom > zrdto else zrdto) for _ in range(num)]\n\n# random_x = \[random.randint(xrdfrom if xrdfrom < xrdto else xrdto, xrdfrom if xrdfrom > xrdto else xrdto) for _ in range(num)]\nrandom_x = \[random.uniform(xrdfrom if xrdfrom < xrdto else xrdto, xrdfrom if xrdfrom > xrdto else xrdto) for _ in range(num)]\n\n# random_y = \[random.randint(yrdfrom if yrdfrom < yrdto else yrdto, yrdfrom if yrdfrom > yrdto else yrdto) for _ in range(num)]\nrandom_y = \[random.uniform(yrdfrom if yrdfrom < yrdto else yrdto, yrdfrom if yrdfrom > yrdto else yrdto) for _ in range(num)]\n\n\n\n# print(random_x)\n# print(random_y)\n# print(random_z)\n# print(type(random_z))\n\n# 近处大远处小通过这个值来计算\nminz = min(random_z)\n# print(minz)\n\n\n\n\n\n#@------------------------------------\n# 查接近值\n\n\n\n\n\ntarget_values = random_z  \npointspath = tn\[\"pointspath\"].value() + \"PointsSample.db\"\n\ndef fetch_closest_records(db_path, target_values):\n    \"\"\"安全查询每个目标值的最接近记录\"\"\"\n    conn = None\n    try:\n        conn = sqlite3.connect(db_path)\n        cursor = conn.cursor()\n        results = \[]\n        \n        # 逐条查询（避免超长SQL）\n        for value in target_values:\n            # 参数化查询（防SQL注入）\n            cursor.execute(\"\"\"\n                SELECT col1, col2, col3 \n                FROM test_table \n                ORDER BY ABS(col3 - ?) \n                LIMIT 1\n            \"\"\", (value,))\n            result = cursor.fetchone()\n            results.append(result)\n            \n        return results\n        \n    except sqlite3.Error as e:\n        print(f\"数据库错误: \{e\}\")\n        return None\n    finally:\n        if conn:\n            conn.close()\n\n# 执行查询\nresults = fetch_closest_records(pointspath, target_values)\n# print(results)\n# 打印结果\n# if results:\n    # for value, record in zip(target_values, results):\n        # if record:\n            # col1, col2, col3 = record\n            # print(f\"最接近 \{value\} 的记录：col1=\{col1\}, col2=\{col2\}, col3=\{col3\}\")\n        # else:\n            # print(f\"值 \{value\} 无匹配记录\")\n# else:\n    # print(\"查询失败，请检查错误日志\")\n\n\n\nfor i in range(0,num):\n    # i+=1\n\n    card = nuke.createNode(\"Card2\",inpanel=False)\n    card\['selectable'].setValue(False)\n    card\['rows'].setValue(1)\n    card\['columns'].setValue(1)\n    if not images:\n        card.setInput(0,checkbd)\n    else:\n        card.setInput(0,texs\[i])\n        \n    card.setXYpos(xps+(500*i),yps+500)\n    cards.append(card)\n    \n    cpx = int(card\['xpos'].getValue())\n    cpy = int(card\['ypos'].getValue())    \n    \n    trgeo = nuke.createNode(\"TransformGeo\",inpanel=False)\n    \n    if i < len(results) and results\[i] and len(results\[i]) >= 3:\n        retc = list(results\[i])\n\n        fdx = retc\[0]\n        fdy = retc\[1]\n        fdz = retc\[2]\n    else:\n        print(f\"Warning: No valid result found for index \{i\}\")\n        fdx, fdy, fdz = 0, 0, 0  # 设置默认值\n\n    \n\n    rx = random_x\[i]\n    ry = random_y\[i]\n    rz = random_z\[i]\n    # rz = random_z\[i]\n    # print(rx,ry,rz)\n    \n    \n    xexp = f\"parent.translate_3d.x + \{rx\} + \{fdx\} * translate_x\"\n    # print(xexp)\n\n    yexp = f\"parent.translate_3d.y + \{ry\} + \{fdy\} * translate_y\"\n    # print(yexp)\n    \n    zexp = f\"parent.translate_3d.z + \{rz\} + \{fdz\} * translate_z\"\n    \n    \n    # print(zexp)\n    \n    trgeo\['translate'].setExpression(xexp,0)\n    trgeo\['translate'].setExpression(yexp,1)\n    trgeo\['translate'].setExpression(zexp,2)\n    if jdyx:\n        trgeo\['uniform_scale'].setExpression(\"(-this.translate.z * (1/(-this.translate.z/\{\})) * parent.scaleSize)\".format(zrdfrom)) #\n    else:\n        trgeo\['uniform_scale'].setExpression(\"(-this.translate.z * parent.scaleSize)\")\n    \n\n    trgeo\['look_rotate_x'].setExpression(\"parent.lookx\")\n    trgeo\['look_rotate_y'].setExpression(\"parent.looky\")\n    trgeo\['look_rotate_z'].setExpression(\"parent.lookz\")\n    \n    trgeo.setInput(0,card)\n    trgeo.setInput(2,cam)\n    trgeo.setInput(1,None)\n    # trgeo.setInput(1,holdf)\n    trgeo.setXYpos(cpx+(0),cpy+300)\n    geos.append(trgeo)\n    \n\ncutsjc = scj.inputs()\nfor i, ged in enumerate(geos):\n    inindex = i+cutsjc\n    scj.setInput(inindex,ged)\n\ntn.end()\n\n\n\n\n\n\n\n\n\n\n\n"}
+ addUserKnob {22 CteatCardsB l "创建随机Card B" t 随机点靠近在采样的3d点上 -STARTLINE T "import random\nimport nuke\nimport sqlite3\n# import math\n\ntn = nuke.thisNode()\n\ntn.begin()\n\ndef deselect():\n\tfor i in nuke.allNodes():\n\t\ti.setSelected(False)\ndef clear():\n\tfor i in nuke.allNodes():\n\t\tif i\['name'].getValue() not in \['cam','Output1','TransformGeoAll',\"Scenecc\"]:\n\t\t\tnuke.delete(i)\nclear()\ndeselect()\n\ntransformGeos = nuke.toNode('TransformGeoAll')\nOutput = nuke.toNode('Output1')\ncam = nuke.toNode('cam')\nscj = nuke.toNode(\"Scenecc\")\njdyx = tn\[\"zcheck\"].value()\nimages = tn\[\"ImageInput\"].value()\n\n\n\n\nnum = int(tn\['num'].getValue())\n# col = int(tn\['col'].getValue())\nseedsize = tn\[\"seedsize\"].getValue()\n# 种子\nrandom.seed(seedsize)\n\n#3d空间的范围定位,这里计算采样的最大值和最小值来计算\nposition_3dfrom = tn\[\"position_3dfrom\"].value()\nposition_3dto = tn\[\"position_3dto\"].value()\nposition_3dfd = tn\[\"position_3dfd\"].value()\n\n\nfdx = int(position_3dfd\[0])\nfdy = int(position_3dfd\[1])\nfdz = int(position_3dfd\[2])\n\nxrdfrom = int(position_3dfrom\[0])\nxrdto = int(position_3dto\[0])\n\nyrdfrom = int(position_3dfrom\[1])\nyrdto = int(position_3dto\[1])\n\n\nzrdfrom = int(position_3dfrom\[2])\nzrdto = int(position_3dto\[2])\n\n# 增加一个浮动值\nxrdfrom = xrdfrom + fdx if xrdfrom > 0 else xrdfrom - fdx\nxrdto = xrdto + fdx if xrdto > 0 else xrdto - fdx\n\n\nyrdfrom = yrdfrom + fdy if yrdfrom > 0 else yrdfrom - fdy\nyrdto = yrdto + fdy if yrdto > 0 else yrdto - fdy\n\n\nzrdfrom = zrdfrom + fdz if zrdfrom > 0 else zrdfrom - fdz\nzrdto = zrdto + fdz if zrdto > 0 else zrdto - fdz\n\n\n# 这里找到相机的xy坐标\n\nxps = int(cam\['xpos'].getValue())\nyps = int(cam\['ypos'].getValue())\n\nif not images:\n    checkbd = nuke.createNode(\"CheckerBoard2\",inpanel=False)\n    checkbd.setXYpos(xps+(700),yps+0)\nelse:\n    imgs = \[]\n    for i in range(0,num):\n        img = nuke.createNode(\"Input\",inpanel=False)\n        img.setXYpos(xps+200+(200*i),yps-200)\n        img\[\"label\"].setValue(f\"Input\{i+1\}\")\n        imgs.append(img)\n    \n    texs = \[]\n    for i in range(0,num):\n        tex = nuke.createNode(\"Text2\",inpanel=False)\n        tex\[\"box\"].setExpression(\"0\",0)\n        tex\[\"box\"].setExpression(\"0\",1)\n        tex\[\"box\"].setExpression(\"this.input.width\",2)\n        tex\[\"box\"].setExpression(\"this.input.height\",3)\n        tex\[\"xjustify\"].setValue(1)\n        tex\[\"yjustify\"].setValue(1)\n\n        tex\[\"replace\"].setExpression(\"parent.closeCheckbord\")\n        tex\[\"disable\"].setExpression(\"!parent.ShowInputName\")\n\n        tex\[\"message\"].setValue(f\"Input\{i+1\}\")\n        tex\[\"label\"].setValue(f\"Input\{i+1\}\")\n        tex.setXYpos(xps+200+(200*i),yps-50)\n        tex.setInput(0,imgs\[i])\n        texs.append(tex)\n\n        \n\n# card created\ncards = \[]\ngeos = \[]\n\n# 这里计算一定数量的随机值,在3d空间范围内\n# random_z = \[random.randint(zrdfrom if zrdfrom < zrdto else zrdto, zrdfrom if zrdfrom > zrdto else zrdto) for _ in range(num)]\nrandom_z = \[random.uniform(zrdfrom if zrdfrom < zrdto else zrdto, zrdfrom if zrdfrom > zrdto else zrdto) for _ in range(num)]\n\n# random_x = \[random.randint(xrdfrom if xrdfrom < xrdto else xrdto, xrdfrom if xrdfrom > xrdto else xrdto) for _ in range(num)]\nrandom_x = \[random.uniform(xrdfrom if xrdfrom < xrdto else xrdto, xrdfrom if xrdfrom > xrdto else xrdto) for _ in range(num)]\n\n# random_y = \[random.randint(yrdfrom if yrdfrom < yrdto else yrdto, yrdfrom if yrdfrom > yrdto else yrdto) for _ in range(num)]\nrandom_y = \[random.uniform(yrdfrom if yrdfrom < yrdto else yrdto, yrdfrom if yrdfrom > yrdto else yrdto) for _ in range(num)]\n\n\n\n# print(random_x)\n# print(random_y)\n# print(random_z)\n# print(type(random_z))\n\n# 近处大远处小通过这个值来计算\nminz = min(random_z)\n# print(minz)\n \n# ------------------------- 用3d点生成随机位置\n\n\n# 要获取的随机值的数量\n\ndef random3dpoint(db_path,num_values):\n    conn = None\n    try:\n        conn = sqlite3.connect(db_path)\n        cursor = conn.cursor()\n\n        # 先获取表中的总行数\n        cursor.execute(\"SELECT COUNT(*) FROM test_table\")\n        total_rows = cursor.fetchone()\[0]\n\n        if total_rows < num_values:\n            print(f\"表中的行数少于需要获取的随机值数量，表中只有 \{total_rows\} 行。\")\n        else:\n            # 生成 num_values 个不重复的随机行号\n            random_row_numbers = random.sample(range(1, total_rows + 1), num_values)\n\n            results = \[]\n            for row_number in random_row_numbers:\n                # 使用 LIMIT 和 OFFSET 来获取指定行的数据\n                cursor.execute(\"\"\"\n                    SELECT col1, col2, col3 \n                    FROM test_table \n                    LIMIT 1 OFFSET ?\n                \"\"\", (row_number - 1,))\n                result = cursor.fetchone()\n                results.append(result)\n            return results\n\n            # 打印结果\n            # for result in results:\n                # print(result)\n\n    except sqlite3.Error as e:\n        print(f\"数据库错误: \{e\}\")\n        return None\n    finally:\n        if conn:\n            conn.close()\n\n# 执行查询 3d 随机点\nrandom3dxyz = random3dpoint(pointspath, num)\n\n\n\nfor i in range(0,num):\n    # i+=1\n\n    card = nuke.createNode(\"Card2\",inpanel=False)\n    card\['selectable'].setValue(False)\n    card\['rows'].setValue(1)\n    card\['columns'].setValue(1)\n    if not images:\n        card.setInput(0,checkbd)\n    else:\n        card.setInput(0,texs\[i])\n        \n    card.setXYpos(xps+(500*i),yps+500)\n    cards.append(card)\n    \n    cpx = int(card\['xpos'].getValue())\n    cpy = int(card\['ypos'].getValue())    \n    \n    trgeo = nuke.createNode(\"TransformGeo\",inpanel=False)\n \n    fdx2 = random3dxyz\[i]\[0]\n    fdy2 = random3dxyz\[i]\[1]\n    fdz2 = random3dxyz\[i]\[2]\n\n    rx = random_x\[i]\n    ry = random_y\[i]\n    rz = random_z\[i]\n    # rz = random_z\[i]\n    # print(rx,ry,rz)\n    \n    \n    xexp = f\"parent.translate_3d.x + \{fdx2\} + \{rx\} * translate_x\"\n    # print(xexp)\n\n    yexp = f\"parent.translate_3d.y + \{fdy2\} + \{ry\} * translate_y\"\n    # print(yexp)\n    \n    zexp = f\"parent.translate_3d.z + \{fdz2\} + \{rz\} * translate_z\"\n    \n    \n    # print(zexp)\n    \n    trgeo\['translate'].setExpression(xexp,0)\n    trgeo\['translate'].setExpression(yexp,1)\n    trgeo\['translate'].setExpression(zexp,2)\n    if jdyx:\n        trgeo\['uniform_scale'].setExpression(\"(-this.translate.z * (1/(-this.translate.z/\{\})) * parent.scaleSize)\".format(zrdfrom)) #\n    else:\n        trgeo\['uniform_scale'].setExpression(\"(-this.translate.z * parent.scaleSize)\")\n    \n\n    trgeo\['look_rotate_x'].setExpression(\"parent.lookx\")\n    trgeo\['look_rotate_y'].setExpression(\"parent.looky\")\n    trgeo\['look_rotate_z'].setExpression(\"parent.lookz\")\n    \n    trgeo.setInput(0,card)\n    trgeo.setInput(2,cam)\n    trgeo.setInput(1,None)\n    # trgeo.setInput(1,holdf)\n    trgeo.setXYpos(cpx+(0),cpy+300)\n    geos.append(trgeo)\n    \n\ncutsjc = scj.inputs()\nfor i, ged in enumerate(geos):\n    inindex = i+cutsjc\n    scj.setInput(inindex,ged)\n\ntn.end()\n\n\n\n\n\n\n\n\n\n\n\n"}
+ addUserKnob {26 ""}
+ addUserKnob {13 translate_3d l 整体偏移}
+ addUserKnob {7 translate_x l "散布 X 间距"}
+ addUserKnob {7 translate_y l "散布 Y 间距"}
+ addUserKnob {7 translate_z l "散布 Z 间距"}
+ addUserKnob {7 scaleSize l 整体缩比例}
+ scaleSize 1
+ addUserKnob {22 matchSamplePoint t 贴近采样点的三维坐标设置 T "\nimport nuke\n\n\ntn = nuke.thisNode()\n\n\ntn\[\"position_3dfd\"].setValue(\[0,0,0])\ntn\[\"translate_3d\"].setValue(\[0,0,0])\ntn\[\"translate_x\"].setValue(0)\ntn\[\"translate_y\"].setValue(0)\ntn\[\"translate_z\"].setValue(0)" +STARTLINE}
+ addUserKnob {22 ClearExpression l "Clear Link" t 清除link-拷贝出来单独调整 -STARTLINE T "\nimport nuke\n\n\ntn = nuke.thisNode()\n\nret = nuke.ask(\"清空表达式连接？\")\nif ret:\n    tn.begin()\n\n    for i in nuke.allNodes(\"TransformGeo\"):\n        if i\['name'].getValue() not in \['cam','Output1','TransformGeoAll',\"Scenecc\"]:\n            if i\['translate'].isAnimated():\n                i\['translate'].clearAnimated()\n                \n            if i\['uniform_scale'].isAnimated():\n                i\['uniform_scale'].clearAnimated()\n                \n            for x in \['look_rotate_x','look_rotate_y','look_rotate_z']:\n                if i\[x].isAnimated():\n                    i\[x].clearAnimated()\n    \n    for i in nuke.allNodes(\"FrameHold\"):\n        if i\['firstFrame'].isAnimated():\n            i\['firstFrame'].clearAnimated()\n            \n    for i in nuke.allNodes(\"Text2\"):\n        for x in \['box','replace','yjustify',\"disable\"]:\n            if i\[x].isAnimated():\n                i\[x].clearAnimated()\n                \n\n    tn.end()"}
+}
+ Input {
+  inputs 0
+  name cam
+  label 0
+  xpos -226
+  ypos -3
+ }
+set N7a6800 [stack 0]
+push 0
+ CheckerBoard2 {
+  inputs 0
+  name CheckerBoard1
+  xpos 474
+  ypos -3
+ }
+set Nec578000 [stack 0]
+ Card2 {
+  selectable false
+  rows 1
+  columns 1
+  control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 1 {0.1666666865 0 0} 1 {0 0 0} 1 {0 0.1666666865 0} 1 {0 0 0} 1 {0 0 0} 
+1 {0 -0.5 0} 1 {0.1666666716 0 0} 1 {-0.1666666716 0 0} 1 {0 0.1666666865 0} 1 {0 0 0} 1 {0.5 0 0} 
+1 {0.5 -0.5 0} 1 {0 0 0} 1 {-0.1666666865 0 0} 1 {0 0.1666666865 0} 1 {0 0 0} 1 {1 0 0} 
+1 {-0.5 0 0} 1 {0.1666666865 0 0} 1 {0 0 0} 1 {0 0.1666666716 0} 1 {0 -0.1666666716 0} 1 {0 0.5 0} 
+1 {0 0 0} 1 {0.1666666716 0 0} 1 {-0.1666666716 0 0} 1 {0 0.1666666716 0} 1 {0 -0.1666666716 0} 1 {0.5 0.5 0} 
+1 {0.5 0 0} 1 {0 0 0} 1 {-0.1666666865 0 0} 1 {0 0.1666666716 0} 1 {0 -0.1666666716 0} 1 {1 0.5 0} 
+1 {-0.5 0.5 0} 1 {0.1666666865 0 0} 1 {0 0 0} 1 {0 0 0} 1 {0 -0.1666666865 0} 1 {0 1 0} 
+1 {0 0.5 0} 1 {0.1666666716 0 0} 1 {-0.1666666716 0 0} 1 {0 0 0} 1 {0 -0.1666666865 0} 1 {0.5 1 0} 
+1 {0.5 0.5 0} 1 {0 0 0} 1 {-0.1666666865 0 0} 1 {0 0 0} 1 {0 -0.1666666865 0} 1 {1 1 0} }
+  name Card10
+  xpos 4274
+  ypos 497
+ }
+ TransformGeo {
+  inputs 3
+  translate {{"parent.translate_3d.x + 1597.103515625 + 742.3288559336315 * translate_x"} {"parent.translate_3d.y + 1597.103515625 + 1124.3516082570213 * translate_y"} {"parent.translate_3d.z + 3547.5791015625 + 318.8035757773159 * translate_z"}}
+  uniform_scale {{"(-this.translate.z * (1/(-this.translate.z/-3547)) * parent.scaleSize)"}}
+  look_rotate_x {{parent.lookx}}
+  look_rotate_y {{parent.looky}}
+  look_rotate_z {{parent.lookz}}
+  name TransformGeo10
+  selected true
+  xpos 4274
+  ypos 797
+ }
+push $N7a6800
+push 0
+push $Nec578000
+ Card2 {
+  selectable false
+  rows 1
+  columns 1
+  control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 1 {0.1666666865 0 0} 1 {0 0 0} 1 {0 0.1666666865 0} 1 {0 0 0} 1 {0 0 0} 
+1 {0 -0.5 0} 1 {0.1666666716 0 0} 1 {-0.1666666716 0 0} 1 {0 0.1666666865 0} 1 {0 0 0} 1 {0.5 0 0} 
+1 {0.5 -0.5 0} 1 {0 0 0} 1 {-0.1666666865 0 0} 1 {0 0.1666666865 0} 1 {0 0 0} 1 {1 0 0} 
+1 {-0.5 0 0} 1 {0.1666666865 0 0} 1 {0 0 0} 1 {0 0.1666666716 0} 1 {0 -0.1666666716 0} 1 {0 0.5 0} 
+1 {0 0 0} 1 {0.1666666716 0 0} 1 {-0.1666666716 0 0} 1 {0 0.1666666716 0} 1 {0 -0.1666666716 0} 1 {0.5 0.5 0} 
+1 {0.5 0 0} 1 {0 0 0} 1 {-0.1666666865 0 0} 1 {0 0.1666666716 0} 1 {0 -0.1666666716 0} 1 {1 0.5 0} 
+1 {-0.5 0.5 0} 1 {0.1666666865 0 0} 1 {0 0 0} 1 {0 0 0} 1 {0 -0.1666666865 0} 1 {0 1 0} 
+1 {0 0.5 0} 1 {0.1666666716 0 0} 1 {-0.1666666716 0 0} 1 {0 0 0} 1 {0 -0.1666666865 0} 1 {0.5 1 0} 
+1 {0.5 0.5 0} 1 {0 0 0} 1 {-0.1666666865 0 0} 1 {0 0 0} 1 {0 -0.1666666865 0} 1 {1 1 0} }
+  name Card9
+  xpos 3774
+  ypos 497
+ }
+ TransformGeo {
+  inputs 3
+  translate {{"parent.translate_3d.x + 1597.103515625 + -1123.1489581384724 * translate_x"} {"parent.translate_3d.y + -532.3677978515625 + 492.3274519821439 * translate_y"} {"parent.translate_3d.z + 1182.5262451171875 + 2934.2901522354123 * translate_z"}}
+  uniform_scale {{"(-this.translate.z * (1/(-this.translate.z/-3547)) * parent.scaleSize)"}}
+  look_rotate_x {{parent.lookx}}
+  look_rotate_y {{parent.looky}}
+  look_rotate_z {{parent.lookz}}
+  name TransformGeo9
+  xpos 3774
+  ypos 797
+ }
+push $N7a6800
+push 0
+push $Nec578000
+ Card2 {
+  selectable false
+  rows 1
+  columns 1
+  control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 1 {0.1666666865 0 0} 1 {0 0 0} 1 {0 0.1666666865 0} 1 {0 0 0} 1 {0 0 0} 
+1 {0 -0.5 0} 1 {0.1666666716 0 0} 1 {-0.1666666716 0 0} 1 {0 0.1666666865 0} 1 {0 0 0} 1 {0.5 0 0} 
+1 {0.5 -0.5 0} 1 {0 0 0} 1 {-0.1666666865 0 0} 1 {0 0.1666666865 0} 1 {0 0 0} 1 {1 0 0} 
+1 {-0.5 0 0} 1 {0.1666666865 0 0} 1 {0 0 0} 1 {0 0.1666666716 0} 1 {0 -0.1666666716 0} 1 {0 0.5 0} 
+1 {0 0 0} 1 {0.1666666716 0 0} 1 {-0.1666666716 0 0} 1 {0 0.1666666716 0} 1 {0 -0.1666666716 0} 1 {0.5 0.5 0} 
+1 {0.5 0 0} 1 {0 0 0} 1 {-0.1666666865 0 0} 1 {0 0.1666666716 0} 1 {0 -0.1666666716 0} 1 {1 0.5 0} 
+1 {-0.5 0.5 0} 1 {0.1666666865 0 0} 1 {0 0 0} 1 {0 0 0} 1 {0 -0.1666666865 0} 1 {0 1 0} 
+1 {0 0.5 0} 1 {0.1666666716 0 0} 1 {-0.1666666716 0 0} 1 {0 0 0} 1 {0 -0.1666666865 0} 1 {0.5 1 0} 
+1 {0.5 0.5 0} 1 {0 0 0} 1 {-0.1666666865 0 0} 1 {0 0 0} 1 {0 -0.1666666865 0} 1 {1 1 0} }
+  name Card8
+  xpos 3274
+  ypos 497
+ }
+ TransformGeo {
+  inputs 3
+  translate {{"parent.translate_3d.x + 1597.103515625 + -148.23191281916615 * translate_x"} {"parent.translate_3d.y + -532.3677978515625 + -1470.0743886529492 * translate_y"} {"parent.translate_3d.z + -3547.5791015625 + -182.54094069858047 * translate_z"}}
+  uniform_scale {{"(-this.translate.z * (1/(-this.translate.z/-3547)) * parent.scaleSize)"}}
+  look_rotate_x {{parent.lookx}}
+  look_rotate_y {{parent.looky}}
+  look_rotate_z {{parent.lookz}}
+  name TransformGeo8
+  xpos 3274
+  ypos 797
+ }
+push $N7a6800
+push 0
+push $Nec578000
+ Card2 {
+  selectable false
+  rows 1
+  columns 1
+  control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 1 {0.1666666865 0 0} 1 {0 0 0} 1 {0 0.1666666865 0} 1 {0 0 0} 1 {0 0 0} 
+1 {0 -0.5 0} 1 {0.1666666716 0 0} 1 {-0.1666666716 0 0} 1 {0 0.1666666865 0} 1 {0 0 0} 1 {0.5 0 0} 
+1 {0.5 -0.5 0} 1 {0 0 0} 1 {-0.1666666865 0 0} 1 {0 0.1666666865 0} 1 {0 0 0} 1 {1 0 0} 
+1 {-0.5 0 0} 1 {0.1666666865 0 0} 1 {0 0 0} 1 {0 0.1666666716 0} 1 {0 -0.1666666716 0} 1 {0 0.5 0} 
+1 {0 0 0} 1 {0.1666666716 0 0} 1 {-0.1666666716 0 0} 1 {0 0.1666666716 0} 1 {0 -0.1666666716 0} 1 {0.5 0.5 0} 
+1 {0.5 0 0} 1 {0 0 0} 1 {-0.1666666865 0 0} 1 {0 0.1666666716 0} 1 {0 -0.1666666716 0} 1 {1 0.5 0} 
+1 {-0.5 0.5 0} 1 {0.1666666865 0 0} 1 {0 0 0} 1 {0 0 0} 1 {0 -0.1666666865 0} 1 {0 1 0} 
+1 {0 0.5 0} 1 {0.1666666716 0 0} 1 {-0.1666666716 0 0} 1 {0 0 0} 1 {0 -0.1666666865 0} 1 {0.5 1 0} 
+1 {0.5 0.5 0} 1 {0 0 0} 1 {-0.1666666865 0 0} 1 {0 0 0} 1 {0 -0.1666666865 0} 1 {1 1 0} }
+  name Card7
+  xpos 2774
+  ypos 497
+ }
+ TransformGeo {
+  inputs 3
+  translate {{"parent.translate_3d.x + 1597.103515625 + 1575.2341163835667 * translate_x"} {"parent.translate_3d.y + 532.367919921875 + 1129.6684385734861 * translate_y"} {"parent.translate_3d.z + 3547.5791015625 + -1678.550041966582 * translate_z"}}
+  uniform_scale {{"(-this.translate.z * (1/(-this.translate.z/-3547)) * parent.scaleSize)"}}
+  look_rotate_x {{parent.lookx}}
+  look_rotate_y {{parent.looky}}
+  look_rotate_z {{parent.lookz}}
+  name TransformGeo7
+  xpos 2774
+  ypos 797
+ }
+push $N7a6800
+push 0
+push $Nec578000
+ Card2 {
+  selectable false
+  rows 1
+  columns 1
+  control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 1 {0.1666666865 0 0} 1 {0 0 0} 1 {0 0.1666666865 0} 1 {0 0 0} 1 {0 0 0} 
+1 {0 -0.5 0} 1 {0.1666666716 0 0} 1 {-0.1666666716 0 0} 1 {0 0.1666666865 0} 1 {0 0 0} 1 {0.5 0 0} 
+1 {0.5 -0.5 0} 1 {0 0 0} 1 {-0.1666666865 0 0} 1 {0 0.1666666865 0} 1 {0 0 0} 1 {1 0 0} 
+1 {-0.5 0 0} 1 {0.1666666865 0 0} 1 {0 0 0} 1 {0 0.1666666716 0} 1 {0 -0.1666666716 0} 1 {0 0.5 0} 
+1 {0 0 0} 1 {0.1666666716 0 0} 1 {-0.1666666716 0 0} 1 {0 0.1666666716 0} 1 {0 -0.1666666716 0} 1 {0.5 0.5 0} 
+1 {0.5 0 0} 1 {0 0 0} 1 {-0.1666666865 0 0} 1 {0 0.1666666716 0} 1 {0 -0.1666666716 0} 1 {1 0.5 0} 
+1 {-0.5 0.5 0} 1 {0.1666666865 0 0} 1 {0 0 0} 1 {0 0 0} 1 {0 -0.1666666865 0} 1 {0 1 0} 
+1 {0 0.5 0} 1 {0.1666666716 0 0} 1 {-0.1666666716 0 0} 1 {0 0 0} 1 {0 -0.1666666865 0} 1 {0.5 1 0} 
+1 {0.5 0.5 0} 1 {0 0 0} 1 {-0.1666666865 0 0} 1 {0 0 0} 1 {0 -0.1666666865 0} 1 {1 1 0} }
+  name Card6
+  xpos 2274
+  ypos 497
+ }
+ TransformGeo {
+  inputs 3
+  translate {{"parent.translate_3d.x + 532.367919921875 + 650.7607658561901 * translate_x"} {"parent.translate_3d.y + 1597.103515625 + -209.09242951918645 * translate_y"} {"parent.translate_3d.z + -1182.5264892578125 + 1058.9563390885833 * translate_z"}}
+  uniform_scale {{"(-this.translate.z * (1/(-this.translate.z/-3547)) * parent.scaleSize)"}}
+  look_rotate_x {{parent.lookx}}
+  look_rotate_y {{parent.looky}}
+  look_rotate_z {{parent.lookz}}
+  name TransformGeo6
+  xpos 2274
+  ypos 797
+ }
+push $N7a6800
+push 0
+push $Nec578000
+ Card2 {
+  selectable false
+  rows 1
+  columns 1
+  control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 1 {0.1666666865 0 0} 1 {0 0 0} 1 {0 0.1666666865 0} 1 {0 0 0} 1 {0 0 0} 
+1 {0 -0.5 0} 1 {0.1666666716 0 0} 1 {-0.1666666716 0 0} 1 {0 0.1666666865 0} 1 {0 0 0} 1 {0.5 0 0} 
+1 {0.5 -0.5 0} 1 {0 0 0} 1 {-0.1666666865 0 0} 1 {0 0.1666666865 0} 1 {0 0 0} 1 {1 0 0} 
+1 {-0.5 0 0} 1 {0.1666666865 0 0} 1 {0 0 0} 1 {0 0.1666666716 0} 1 {0 -0.1666666716 0} 1 {0 0.5 0} 
+1 {0 0 0} 1 {0.1666666716 0 0} 1 {-0.1666666716 0 0} 1 {0 0.1666666716 0} 1 {0 -0.1666666716 0} 1 {0.5 0.5 0} 
+1 {0.5 0 0} 1 {0 0 0} 1 {-0.1666666865 0 0} 1 {0 0.1666666716 0} 1 {0 -0.1666666716 0} 1 {1 0.5 0} 
+1 {-0.5 0.5 0} 1 {0.1666666865 0 0} 1 {0 0 0} 1 {0 0 0} 1 {0 -0.1666666865 0} 1 {0 1 0} 
+1 {0 0.5 0} 1 {0.1666666716 0 0} 1 {-0.1666666716 0 0} 1 {0 0 0} 1 {0 -0.1666666865 0} 1 {0.5 1 0} 
+1 {0.5 0.5 0} 1 {0 0 0} 1 {-0.1666666865 0 0} 1 {0 0 0} 1 {0 -0.1666666865 0} 1 {1 1 0} }
+  name Card5
+  xpos 1774
+  ypos 497
+ }
+ TransformGeo {
+  inputs 3
+  translate {{"parent.translate_3d.x + -1597.103515625 + 57.18278361305579 * translate_x"} {"parent.translate_3d.y + 1597.103515625 + -920.1849756225379 * translate_y"} {"parent.translate_3d.z + 1182.5264892578125 + 699.2000784420479 * translate_z"}}
+  uniform_scale {{"(-this.translate.z * (1/(-this.translate.z/-3547)) * parent.scaleSize)"}}
+  look_rotate_x {{parent.lookx}}
+  look_rotate_y {{parent.looky}}
+  look_rotate_z {{parent.lookz}}
+  name TransformGeo5
+  xpos 1774
+  ypos 797
+ }
+push $N7a6800
+push 0
+push $Nec578000
+ Card2 {
+  selectable false
+  rows 1
+  columns 1
+  control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 1 {0.1666666865 0 0} 1 {0 0 0} 1 {0 0.1666666865 0} 1 {0 0 0} 1 {0 0 0} 
+1 {0 -0.5 0} 1 {0.1666666716 0 0} 1 {-0.1666666716 0 0} 1 {0 0.1666666865 0} 1 {0 0 0} 1 {0.5 0 0} 
+1 {0.5 -0.5 0} 1 {0 0 0} 1 {-0.1666666865 0 0} 1 {0 0.1666666865 0} 1 {0 0 0} 1 {1 0 0} 
+1 {-0.5 0 0} 1 {0.1666666865 0 0} 1 {0 0 0} 1 {0 0.1666666716 0} 1 {0 -0.1666666716 0} 1 {0 0.5 0} 
+1 {0 0 0} 1 {0.1666666716 0 0} 1 {-0.1666666716 0 0} 1 {0 0.1666666716 0} 1 {0 -0.1666666716 0} 1 {0.5 0.5 0} 
+1 {0.5 0 0} 1 {0 0 0} 1 {-0.1666666865 0 0} 1 {0 0.1666666716 0} 1 {0 -0.1666666716 0} 1 {1 0.5 0} 
+1 {-0.5 0.5 0} 1 {0.1666666865 0 0} 1 {0 0 0} 1 {0 0 0} 1 {0 -0.1666666865 0} 1 {0 1 0} 
+1 {0 0.5 0} 1 {0.1666666716 0 0} 1 {-0.1666666716 0 0} 1 {0 0 0} 1 {0 -0.1666666865 0} 1 {0.5 1 0} 
+1 {0.5 0.5 0} 1 {0 0 0} 1 {-0.1666666865 0 0} 1 {0 0 0} 1 {0 -0.1666666865 0} 1 {1 1 0} }
+  name Card4
+  xpos 1274
+  ypos 497
+ }
+ TransformGeo {
+  inputs 3
+  translate {{"parent.translate_3d.x + 1597.103515625 + 283.36652716823414 * translate_x"} {"parent.translate_3d.y + -532.3677978515625 + -1073.5279021287524 * translate_y"} {"parent.translate_3d.z + 3547.5791015625 + -3056.561550210323 * translate_z"}}
+  uniform_scale {{"(-this.translate.z * (1/(-this.translate.z/-3547)) * parent.scaleSize)"}}
+  look_rotate_x {{parent.lookx}}
+  look_rotate_y {{parent.looky}}
+  look_rotate_z {{parent.lookz}}
+  name TransformGeo4
+  xpos 1274
+  ypos 797
+ }
+push $N7a6800
+push 0
+push $Nec578000
+ Card2 {
+  selectable false
+  rows 1
+  columns 1
+  control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 1 {0.1666666865 0 0} 1 {0 0 0} 1 {0 0.1666666865 0} 1 {0 0 0} 1 {0 0 0} 
+1 {0 -0.5 0} 1 {0.1666666716 0 0} 1 {-0.1666666716 0 0} 1 {0 0.1666666865 0} 1 {0 0 0} 1 {0.5 0 0} 
+1 {0.5 -0.5 0} 1 {0 0 0} 1 {-0.1666666865 0 0} 1 {0 0.1666666865 0} 1 {0 0 0} 1 {1 0 0} 
+1 {-0.5 0 0} 1 {0.1666666865 0 0} 1 {0 0 0} 1 {0 0.1666666716 0} 1 {0 -0.1666666716 0} 1 {0 0.5 0} 
+1 {0 0 0} 1 {0.1666666716 0 0} 1 {-0.1666666716 0 0} 1 {0 0.1666666716 0} 1 {0 -0.1666666716 0} 1 {0.5 0.5 0} 
+1 {0.5 0 0} 1 {0 0 0} 1 {-0.1666666865 0 0} 1 {0 0.1666666716 0} 1 {0 -0.1666666716 0} 1 {1 0.5 0} 
+1 {-0.5 0.5 0} 1 {0.1666666865 0 0} 1 {0 0 0} 1 {0 0 0} 1 {0 -0.1666666865 0} 1 {0 1 0} 
+1 {0 0.5 0} 1 {0.1666666716 0 0} 1 {-0.1666666716 0 0} 1 {0 0 0} 1 {0 -0.1666666865 0} 1 {0.5 1 0} 
+1 {0.5 0.5 0} 1 {0 0 0} 1 {-0.1666666865 0 0} 1 {0 0 0} 1 {0 -0.1666666865 0} 1 {1 1 0} }
+  name Card3
+  xpos 774
+  ypos 497
+ }
+ TransformGeo {
+  inputs 3
+  translate {{"parent.translate_3d.x + 1597.103515625 + -922.3038212184252 * translate_x"} {"parent.translate_3d.y + -1597.103515625 + -1494.5053286414443 * translate_y"} {"parent.translate_3d.z + 1182.5262451171875 + -957.9994898983105 * translate_z"}}
+  uniform_scale {{"(-this.translate.z * (1/(-this.translate.z/-3547)) * parent.scaleSize)"}}
+  look_rotate_x {{parent.lookx}}
+  look_rotate_y {{parent.looky}}
+  look_rotate_z {{parent.lookz}}
+  name TransformGeo3
+  xpos 774
+  ypos 797
+ }
+push $N7a6800
+push 0
+push $Nec578000
+ Card2 {
+  selectable false
+  rows 1
+  columns 1
+  control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 1 {0.1666666865 0 0} 1 {0 0 0} 1 {0 0.1666666865 0} 1 {0 0 0} 1 {0 0 0} 
+1 {0 -0.5 0} 1 {0.1666666716 0 0} 1 {-0.1666666716 0 0} 1 {0 0.1666666865 0} 1 {0 0 0} 1 {0.5 0 0} 
+1 {0.5 -0.5 0} 1 {0 0 0} 1 {-0.1666666865 0 0} 1 {0 0.1666666865 0} 1 {0 0 0} 1 {1 0 0} 
+1 {-0.5 0 0} 1 {0.1666666865 0 0} 1 {0 0 0} 1 {0 0.1666666716 0} 1 {0 -0.1666666716 0} 1 {0 0.5 0} 
+1 {0 0 0} 1 {0.1666666716 0 0} 1 {-0.1666666716 0 0} 1 {0 0.1666666716 0} 1 {0 -0.1666666716 0} 1 {0.5 0.5 0} 
+1 {0.5 0 0} 1 {0 0 0} 1 {-0.1666666865 0 0} 1 {0 0.1666666716 0} 1 {0 -0.1666666716 0} 1 {1 0.5 0} 
+1 {-0.5 0.5 0} 1 {0.1666666865 0 0} 1 {0 0 0} 1 {0 0 0} 1 {0 -0.1666666865 0} 1 {0 1 0} 
+1 {0 0.5 0} 1 {0.1666666716 0 0} 1 {-0.1666666716 0 0} 1 {0 0 0} 1 {0 -0.1666666865 0} 1 {0.5 1 0} 
+1 {0.5 0.5 0} 1 {0 0 0} 1 {-0.1666666865 0 0} 1 {0 0 0} 1 {0 -0.1666666865 0} 1 {1 1 0} }
+  name Card2
+  xpos 274
+  ypos 497
+ }
+ TransformGeo {
+  inputs 3
+  translate {{"parent.translate_3d.x + 1597.103515625 + -186.08855516821836 * translate_x"} {"parent.translate_3d.y + 1597.103515625 + 762.4084572135462 * translate_y"} {"parent.translate_3d.z + 1182.5262451171875 + 2445.5819158949807 * translate_z"}}
+  uniform_scale {{"(-this.translate.z * (1/(-this.translate.z/-3547)) * parent.scaleSize)"}}
+  look_rotate_x {{parent.lookx}}
+  look_rotate_y {{parent.looky}}
+  look_rotate_z {{parent.lookz}}
+  name TransformGeo2
+  xpos 274
+  ypos 797
+ }
+push $N7a6800
+push 0
+push $Nec578000
+ Card2 {
+  selectable false
+  rows 1
+  columns 1
+  control_points {3 3 3 6 
+
+1 {-0.5 -0.5 0} 1 {0.1666666865 0 0} 1 {0 0 0} 1 {0 0.1666666865 0} 1 {0 0 0} 1 {0 0 0} 
+1 {0 -0.5 0} 1 {0.1666666716 0 0} 1 {-0.1666666716 0 0} 1 {0 0.1666666865 0} 1 {0 0 0} 1 {0.5 0 0} 
+1 {0.5 -0.5 0} 1 {0 0 0} 1 {-0.1666666865 0 0} 1 {0 0.1666666865 0} 1 {0 0 0} 1 {1 0 0} 
+1 {-0.5 0 0} 1 {0.1666666865 0 0} 1 {0 0 0} 1 {0 0.1666666716 0} 1 {0 -0.1666666716 0} 1 {0 0.5 0} 
+1 {0 0 0} 1 {0.1666666716 0 0} 1 {-0.1666666716 0 0} 1 {0 0.1666666716 0} 1 {0 -0.1666666716 0} 1 {0.5 0.5 0} 
+1 {0.5 0 0} 1 {0 0 0} 1 {-0.1666666865 0 0} 1 {0 0.1666666716 0} 1 {0 -0.1666666716 0} 1 {1 0.5 0} 
+1 {-0.5 0.5 0} 1 {0.1666666865 0 0} 1 {0 0 0} 1 {0 0 0} 1 {0 -0.1666666865 0} 1 {0 1 0} 
+1 {0 0.5 0} 1 {0.1666666716 0 0} 1 {-0.1666666716 0 0} 1 {0 0 0} 1 {0 -0.1666666865 0} 1 {0.5 1 0} 
+1 {0.5 0.5 0} 1 {0 0 0} 1 {-0.1666666865 0 0} 1 {0 0 0} 1 {0 -0.1666666865 0} 1 {1 1 0} }
+  name Card1
+  xpos -226
+  ypos 497
+ }
+ TransformGeo {
+  inputs 3
+  translate {{"parent.translate_3d.x + 1597.103515625 + 1466.7498834977064 * translate_x"} {"parent.translate_3d.y + -532.3677978515625 + 781.5811689044576 * translate_y"} {"parent.translate_3d.z + -1182.5264892578125 + 1488.8500758277987 * translate_z"}}
+  uniform_scale {{"(-this.translate.z * (1/(-this.translate.z/-3547)) * parent.scaleSize)"}}
+  look_rotate_x {{parent.lookx}}
+  look_rotate_y {{parent.looky}}
+  look_rotate_z {{parent.lookz}}
+  name TransformGeo1
+  xpos -226
+  ypos 797
+ }
+ Scene {
+  inputs 10
+  name Scenecc
+  xpos 279
+  ypos 2672
+ }
+ TransformGeo {
+  name TransformGeoAll
+  xpos 269
+  ypos 2785
+ }
+ Output {
+  name Output1
+  xpos 269
+  ypos 2912
+ }
+end_group

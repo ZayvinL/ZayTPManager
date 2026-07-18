@@ -1,0 +1,18 @@
+set cut_paste_input [stack 0]
+version 15.1 v5
+push $cut_paste_input
+NoOp {
+ name NoOp1
+ selected true
+ xpos -3414
+ ypos 748
+ addUserKnob {20 User}
+ addUserKnob {22 python_button T "\nimport nuke\n\n#ndf = nuke.selectedNode()\[\"file\"].value()\nndf = nuke.thisNode().input(0)\[\"file\"].value()\nprint(ndf)\n\ncurpt = ndf.split(\"/plates/\")\[0]\nshotna = ndf.split(\"/\")\[5]\n\nnkpt = curpt + f\"/comp/nuke/\{shotna\}_comp_v001.nk\"\nrdpt = curpt + f\"/comp/render/\"\n\n\ntn = nuke.thisNode()\ntn\[\"nkpath\"].setValue(nkpt)\ntn\[\"renderpath\"].setValue(rdpt)\n\nprint()\nprint(nkpt)\n\nprint(rdpt)" +STARTLINE}
+ addUserKnob {26 "" +STARTLINE}
+ addUserKnob {1 nkpath}
+ nkpath R:/SLFX/YXCSN/shots/R5/yxcsn_r5_kla_0050/comp/nuke/yxcsn_r5_kla_0050_comp_v001.nk
+ addUserKnob {1 sfxpath}
+ addUserKnob {1 renderpath}
+ renderpath R:/SLFX/YXCSN/shots/R5/yxcsn_r5_kla_0050/comp/render/
+ addUserKnob {1 finalpath}
+}
