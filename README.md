@@ -41,10 +41,10 @@ After restarting Nuke, open the panel via **Z > pipline > ZayTPManager** (it doc
 
 两种方案任选 / Two approaches:
 
-| 方案 / Approach | 做法 / How |
-|---|---|
+| 方案 / Approach           | 做法 / How                                                                                                                                      |
+| ----------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
 | 共享整个工具 / Share the tool | 把工具文件夹放到网络共享盘，每个用户的 `init.py` 中 `pluginAddPath` 指向该共享路径。Place the tool folder on a network share and point each user's `pluginAddPath` to it. |
-| 只共享数据 / Share data only | 工具装在各自本机，把数据根目录改到共享盘（见下方「配置方案」）。Install the tool locally on each machine, change the data root to a network share (see Configuration below). |
+| 只共享数据 / Share data only | 工具装在各自本机，把数据根目录改到共享盘（见下方「配置方案」）。Install the tool locally on each machine, change the data root to a network share (see Configuration below).  |
 
 多用户注意：工具写文件时会尽量放开权限（POSIX 下 chmod 777/666），json 采用
 原子写入，多人同时新建版本时版本号会自动避让，不会互相覆盖。
@@ -77,27 +77,27 @@ All paths inside the data are relative, so the entire `templateWork/` folder can
 
 ### 2. 其他可调项 / Other Configurable Items
 
-| 位置 / Location | 内容 / What |
-|---|---|
-| `paths.py` → `local_path_get()` | 工具自身目录（一般不需要改）。Tool directory (usually no need to change). |
-| `zay_tp_manager.py` top: `THUMB_W / THUMB_H` | 缩略图尺寸（默认 120x80）。Thumbnail size (default 120x80). |
-| `zay_tp_manager.py` top: `NOTE_MIN_W` | 版本说明列最小宽度（默认 450）。Note column min width (default 450). |
-| `zay_tp_manager.py` → `image_tooltip(max_size=800)` | 悬浮放大图长边尺寸。Tooltip image max dimension. |
-| `zay_tp_manager.py` bottom: `setStyleSheet` | 界面字体大小（默认 25px）。UI font size (default 25px). |
-| `zay_tp_manager.py` bottom: `registerWidgetAsPanel(...)` | 面板注册名 / ID。Panel registration name / ID. |
-| `zay_tp_data.py` top: `NK_FILE / IMAGE_EXTS` etc. | 节点文件名、支持的图片扩展名。Node file name, supported image extensions. |
-| `menu.py` | 菜单位置（默认 Z > pipline > ZayTPManager）。Menu location (default Z > pipline > ZayTPManager). |
+| 位置 / Location                                            | 内容 / What                                                                               |
+| -------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| `paths.py` → `local_path_get()`                          | 工具自身目录（一般不需要改）。Tool directory (usually no need to change).                              |
+| `zay_tp_manager.py` top: `THUMB_W / THUMB_H`             | 缩略图尺寸（默认 120x80）。Thumbnail size (default 120x80).                                       |
+| `zay_tp_manager.py` top: `NOTE_MIN_W`                    | 版本说明列最小宽度（默认 450）。Note column min width (default 450).                                  |
+| `zay_tp_manager.py` → `image_tooltip(max_size=800)`      | 悬浮放大图长边尺寸。Tooltip image max dimension.                                                  |
+| `zay_tp_manager.py` bottom: `setStyleSheet`              | 界面字体大小（默认 25px）。UI font size (default 25px).                                            |
+| `zay_tp_manager.py` bottom: `registerWidgetAsPanel(...)` | 面板注册名 / ID。Panel registration name / ID.                                                |
+| `zay_tp_data.py` top: `NK_FILE / IMAGE_EXTS` etc.        | 节点文件名、支持的图片扩展名。Node file name, supported image extensions.                              |
+| `menu.py`                                                | 菜单位置（默认 Z > pipline > ZayTPManager）。Menu location (default Z > pipline > ZayTPManager). |
 
 ### 3. 模块说明 / Module Overview
 
-| 文件 / File | 职责 / Role |
-|---|---|
+| 文件 / File                    | 职责 / Role                                                                           |
+| ---------------------------- | ----------------------------------------------------------------------------------- |
 | `zayTPManager_qt_imports.py` | 统一管理 Qt 导入，自动适配 PySide6 / PySide2。Shared Qt imports, auto-adapts PySide6 / PySide2. |
-| `paths.py` | 路径与权限：工具目录、数据根目录、相对/绝对路径换算。Paths & permissions. |
-| `json_io.py` | json 读写（utf-8、原子写入）。JSON read/write (UTF-8, atomic writes). |
-| `zay_tp_data.py` | 数据层：项目/条目/版本的扫描、创建、记录、删除（不依赖 nuke/Qt）。Data layer (no nuke/Qt dependency). |
-| `zay_tp_manager.py` | 主面板界面与交互。Main panel UI & interaction. |
-| `menu.py` | Nuke 菜单注册。Nuke menu registration. |
+| `paths.py`                   | 路径与权限：工具目录、数据根目录、相对/绝对路径换算。Paths & permissions.                                     |
+| `json_io.py`                 | json 读写（utf-8、原子写入）。JSON read/write (UTF-8, atomic writes).                         |
+| `zay_tp_data.py`             | 数据层：项目/条目/版本的扫描、创建、记录、删除（不依赖 nuke/Qt）。Data layer (no nuke/Qt dependency).           |
+| `zay_tp_manager.py`          | 主面板界面与交互。Main panel UI & interaction.                                               |
+| `menu.py`                    | Nuke 菜单注册。Nuke menu registration.                                                   |
 
 ---
 
@@ -125,13 +125,13 @@ templateWork/                     # 数据根目录 / Data root
 
 ### 顶部按钮 / Top Buttons
 
-| 按钮 / Button | 功能 / Purpose |
-|---|---|
-| 项目下拉框 / Project dropdown | 切换当前项目。Switch current project. |
-| 添加项目 / Add Project | 新建项目（名称不能包含 `\ / : * ? " < > \|`）。Create project (illegal chars: `\ / : * ? " < > \|`). |
-| 数据地址 / Data Folder | 在系统文件管理器中打开数据根目录。Open data root in file manager. |
-| 刷新界面 / Refresh | 重新扫描磁盘数据（他人新增内容后点这里）。Re-scan disk (use after others add content). |
-| 使用说明 / Help | 打开本说明页面。Open this help page. |
+| 按钮 / Button              | 功能 / Purpose                                                                            |
+| ------------------------ | --------------------------------------------------------------------------------------- |
+| 项目下拉框 / Project dropdown | 切换当前项目。Switch current project.                                                          |
+| 添加项目 / Add Project       | 新建项目（名称不能包含 `\ / : * ? " < > \|`）。Create project (illegal chars: `\ / : * ? " < > \|`). |
+| 数据地址 / Data Folder       | 在系统文件管理器中打开数据根目录。Open data root in file manager.                                        |
+| 刷新界面 / Refresh           | 重新扫描磁盘数据（他人新增内容后点这里）。Re-scan disk (use after others add content).                       |
+| 使用说明 / Help              | 打开本说明页面。Open this help page.                                                            |
 
 ### 搜索与条目列表（左侧）/ Search & Item List (Left)
 
@@ -144,13 +144,13 @@ templateWork/                     # 数据根目录 / Data root
 
 ### 版本表格（右侧，版本号从高到低）/ Version Table (Right, Newest First)
 
-| 列 / Column | 说明 / Description |
-|---|---|
+| 列 / Column   | 说明 / Description                                                                                                       |
+| ------------ | ---------------------------------------------------------------------------------------------------------------------- |
 | 版本 / Version | v0001 格式；悬浮显示创建用户和节点列表；**双击 = 导入节点**。v0001 format; tooltip shows creator & node list; **double-click = import nodes**. |
-| 图片 / Image | 缩略图，GIF 播放动画；悬浮放大展示；**双击 = 粘贴图片**。Thumbnail, GIF animates; enlarge on hover; **double-click = paste image**. |
-| 版本说明 / Note | **双击可直接编辑**，悬浮显示全文。**Double-click to edit**, hover to see full text. |
-| 版本日期 / Date | 创建日期。Creation date. |
-| 相对地址 / Path | 相对数据根的路径；悬浮显示绝对路径。Path relative to data root; tooltip shows absolute path. |
+| 图片 / Image   | 缩略图，GIF 播放动画；悬浮放大展示；**双击 = 粘贴图片**。Thumbnail, GIF animates; enlarge on hover; **double-click = paste image**.           |
+| 版本说明 / Note  | **双击可直接编辑**，悬浮显示全文。**Double-click to edit**, hover to see full text.                                                   |
+| 版本日期 / Date  | 创建日期。Creation date.                                                                                                    |
+| 相对地址 / Path  | 相对数据根的路径；悬浮显示绝对路径。Path relative to data root; tooltip shows absolute path.                                             |
 
 - **版本右键菜单 / Version Right-click Menu**：
   - `导入nuke节点 / Import Nodes`：把该版本的节点粘贴进当前 Nuke 工程。Paste nodes into current Nuke script.
@@ -187,3 +187,13 @@ templateWork/                     # 数据根目录 / Data root
 - **GIF 悬浮放大时不动 / GIF tooltip doesn't animate**：悬浮大图显示的是首帧，缩略图处正常播放动画。The enlarged tooltip shows the first frame only; thumbnails animate normally.
 - **同一 Nuke 环境有多份同名模块 / Duplicate module names**：模块已改名为 `zayTPManager_qt_imports.py` 以避免与 `sys.path` 上其他插件的 `qt_imports.py` 冲突。Module renamed to `zayTPManager_qt_imports.py` to avoid collisions with other plugins' `qt_imports.py` on `sys.path`.
 - **数据备份 / Data backup**：`templateWork/` 不在 git 跟踪范围内，请自行定期备份该文件夹。`templateWork/` is not tracked by git — back it up regularly on your own.
+
+---
+
+## License / 许可
+
+Copyright 2026 LIUXIAOBO (刘晓波).
+
+Licensed under the Apache License, Version 2.0.
+See [LICENSE](./LICENSE) for the full license text.
+See [NOTICE](./NOTICE) for copyright attribution.
